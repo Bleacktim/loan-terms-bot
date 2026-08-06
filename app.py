@@ -107,36 +107,50 @@ custom_css = """
     text-transform: uppercase;
 }
 
-/* Tabs */
-div[data-baseweb="tab-list"] {
+/* Tabs Container */
+div[data-testid="stTabs"] > div:first-child > div:first-child {
     display: flex !important;
     justify-content: center !important;
-    width: 100% !important;
-    gap: 15px;
+    gap: 20px !important;
+    border-bottom: none !important;
+}
+
+/* Hide Animated Underline */
+div[data-testid="stTabs"] > div:first-child > div:first-child > div[style*="position: absolute"] {
+    display: none !important;
 }
 div[data-baseweb="tab-highlight"] {
     display: none !important;
+    background-color: transparent !important;
 }
-[data-testid="stTabs"] button {
+
+/* Tab Buttons */
+div[data-testid="stTabs"] button {
     font-family: 'Outfit', sans-serif !important;
     color: #94a3b8 !important;
-    font-weight: 600 !important;
-    font-size: 1.3rem !important;
-    padding: 12px 24px !important;
+    font-weight: 700 !important;
+    font-size: 1.4rem !important;
+    padding: 15px 35px !important;
     border-radius: 50px !important;
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
     transition: all 0.3s ease !important;
 }
-[data-testid="stTabs"] button:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
-    transform: translateY(-2px);
+
+div[data-testid="stTabs"] button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-3px) !important;
 }
-[data-testid="stTabs"] button[aria-selected="true"] {
-    color: #fff !important;
-    background: linear-gradient(135deg, #8b5cf6, #0ea5e9) !important;
+
+div[data-testid="stTabs"] button[aria-selected="true"] {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #0ea5e9, #8b5cf6, #ec4899) !important;
+    background-size: 200% auto !important;
     border: none !important;
-    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4) !important;
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6) !important;
+    animation: gradientMove 3s ease infinite !important;
 }
 
 /* Chat Messages */
