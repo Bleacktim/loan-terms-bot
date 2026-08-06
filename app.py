@@ -161,12 +161,12 @@ button[kind="primary"] {
     animation: gradientMove 3s ease infinite !important;
     border-radius: 50px !important;
     transition: all 0.3s ease !important;
-    padding: 10px 15px !important;
+    padding: 8px 6px !important;
 }
 button[kind="primary"] p {
     font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 1.05rem !important;
+    font-size: 0.88rem !important;
     white-space: nowrap !important;
     margin: 0 !important;
 }
@@ -176,7 +176,7 @@ button[kind="secondary"] {
     border-radius: 50px !important;
     box-shadow: 0 0 15px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.1) !important;
     transition: all 0.3s ease !important;
-    padding: 10px 15px !important;
+    padding: 8px 6px !important;
     backdrop-filter: blur(10px) !important;
 }
 button[kind="secondary"]:hover {
@@ -189,7 +189,7 @@ button[kind="secondary"] p {
     color: #cbd5e1 !important;
     font-family: 'Outfit', sans-serif !important;
     font-weight: 600 !important;
-    font-size: 1.05rem !important;
+    font-size: 0.88rem !important;
     white-space: nowrap !important;
     margin: 0 !important;
 }
