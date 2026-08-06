@@ -210,6 +210,11 @@ button[kind="secondary"] p {
 
 /* Chat Input */
 [data-testid="stChatInput"] { background: transparent !important; }
+[data-testid="stBottom"], [data-testid="stBottom"] > div,
+[class*="st-emotion-cache"] > [data-testid="stBottom"] {
+    background-color: #0f172a !important;
+    background: #0f172a !important;
+}
 [data-testid="stChatInput"] > div {
     background: rgba(255, 255, 255, 0.05) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
