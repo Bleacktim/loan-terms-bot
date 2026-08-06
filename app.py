@@ -223,28 +223,41 @@ st.markdown("""
 </script>
 """, unsafe_allow_html=True)
 
-# --- SIDEBAR DASHBOARD ---
-with st.sidebar:
-    st.markdown("<h1>⚙️ Command Center</h1>", unsafe_allow_html=True)
-    
+# --- MAIN LAYOUT: Left Panel + Right Content ---
+main_left, main_right = st.columns([1, 2.8], gap="large")
+
+with main_left:
+    st.markdown("""
+    <div style="
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 24px 20px;
+        backdrop-filter: blur(20px);
+        height: 100%;
+    ">
+    <h3 style="color: white; margin-top: 0;">⚙️ Command Center</h3>
+    </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("### 🤖 AI Persona")
     persona = st.selectbox(
         "Choose how the AI should act:",
-        ["Friendly Advisor", "Strict Corporate Banker", "Legal Analyst"]
+        ["Friendly Advisor", "Strict Corporate Banker", "Legal Analyst"],
+        label_visibility="collapsed"
     )
-    
+
     st.markdown("### 👤 Financial Profile")
     credit_score = st.slider("Credit Score", min_value=300, max_value=850, value=720, step=10)
     loan_amount = st.number_input("Desired Loan Amount ($)", min_value=1000, value=50000, step=5000)
-    
+
     st.markdown("### 📄 Additional Data")
     uploaded_file = st.file_uploader("Upload External Contract (PDF)", type=["pdf"])
     if uploaded_file:
         st.success("File recognized. AI is analyzing...")
-    
+
     st.markdown("---")
-    
-    # Export Chat Feature
+
     if "messages" in st.session_state and len(st.session_state.messages) > 1:
         chat_export = ""
         for msg in st.session_state.messages:
@@ -256,101 +269,102 @@ with st.sidebar:
             mime="text/plain",
             use_container_width=True
         )
-        
+
     if st.button("🧹 Clear Secure Memory", use_container_width=True):
-        st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {persona}."}]
+        if "messages" in st.session_state:
+            st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {persona}."}]
         st.rerun()
 
-# --- MAIN PAGE ---
-st.markdown("""
-<div class="ultra-header">
-    <h1>FinTech AI</h1>
-    <p>Spatial Computing Interface</p>
-</div>
-""", unsafe_allow_html=True)
-
-if "welcomed" not in st.session_state:
-    st.toast('Spatial Interface Initialized.', icon='🚀')
-    time.sleep(0.5)
-    st.toast('Vector Neural Engine Online.', icon='🧠')
-    st.session_state.welcomed = True
-
-# --- CUSTOM TABS ---
-if "active_tab" not in st.session_state:
-    st.session_state.active_tab = "AI Assistant"
-
-st.markdown("<br>", unsafe_allow_html=True)
-col_tab1, col_tab2, col_tab3 = st.columns(3)
-
-with col_tab1:
-    if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
-        st.session_state.active_tab = "AI Assistant"
-        st.rerun()
-
-with col_tab2:
-    if st.button("📊 Market Trends", type="primary" if st.session_state.active_tab == "Market Trends" else "secondary", use_container_width=True):
-        st.session_state.active_tab = "Market Trends"
-        st.rerun()
-
-with col_tab3:
-    if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
-        st.session_state.active_tab = "System Specs"
-        st.rerun()
-
-st.markdown("<br>", unsafe_allow_html=True)
-
-if st.session_state.active_tab == "AI Assistant":
-    if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "assistant", "content": f"Welcome. I am operating as a **{persona}**. How can I assist you with your loan terms?"}]
-
-    chat_container = st.container(height=450, border=False)
-
-    with chat_container:
-        for msg in st.session_state.messages:
-            with st.chat_message(msg["role"]):
-                st.markdown(msg["content"])
-                
-        if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
-            with st.chat_message("assistant"):
-                with st.spinner("Synthesizing neural response..."):
-                    prompt = st.session_state.messages[-1]["content"]
-                    enhanced_prompt = f"Act as a {persona}. User Profile: Credit Score {credit_score}, Loan Request ${loan_amount:,}. Answer the following based ONLY on context:\nQuestion: {prompt}"
-                    response = ask(enhanced_prompt)
-                    
-                st.markdown(response)
-                with st.expander("🔍 View AI Thought Process"):
-                    st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
-                    
-            st.session_state.messages.append({"role": "assistant", "content": response})
-
-elif st.session_state.active_tab == "Market Trends":
-    st.markdown("### 📈 Live Global Interest Rates")
-    chart_data = pd.DataFrame(
-        np.random.randn(30, 3) + [6, 8, 12],
-        columns=["Mortgage %", "Auto Loan %", "Personal Loan %"]
-    )
-    st.line_chart(chart_data, color=["#8b5cf6", "#0ea5e9", "#ec4899"])
-    
-    st.markdown("### 📊 Approval Probability vs Credit Score")
-    bar_data = pd.DataFrame(
-        np.random.rand(5, 1) * 100,
-        index=[">= 800", "740 - 799", "670 - 739", "580 - 669", "< 580"],
-        columns=["Approval Probability (%)"]
-    )
-    st.bar_chart(bar_data, color="#8b5cf6")
-
-elif st.session_state.active_tab == "System Specs":
-    st.markdown("### 🏛️ Deep Technology Stack")
-    st.info("This interface utilizes Apple Vision Pro-style glassmorphism combined with heavy LLM backend processing.")
+with main_right:
+    # --- MAIN PAGE HEADER ---
     st.markdown("""
+    <div class="ultra-header">
+        <h1>FinTech AI</h1>
+        <p>Spatial Computing Interface</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if "welcomed" not in st.session_state:
+        st.toast('Spatial Interface Initialized.', icon='🚀')
+        time.sleep(0.5)
+        st.toast('Vector Neural Engine Online.', icon='🧠')
+        st.session_state.welcomed = True
+
+    # --- CUSTOM TABS ---
+    if "active_tab" not in st.session_state:
+        st.session_state.active_tab = "AI Assistant"
+
+    col_tab1, col_tab2, col_tab3 = st.columns(3)
+
+    with col_tab1:
+        if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
+            st.session_state.active_tab = "AI Assistant"
+            st.rerun()
+
+    with col_tab2:
+        if st.button("📊 Market Trends", type="primary" if st.session_state.active_tab == "Market Trends" else "secondary", use_container_width=True):
+            st.session_state.active_tab = "Market Trends"
+            st.rerun()
+
+    with col_tab3:
+        if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
+            st.session_state.active_tab = "System Specs"
+            st.rerun()
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+
+    if st.session_state.active_tab == "AI Assistant":
+        if "messages" not in st.session_state:
+            st.session_state.messages = [{"role": "assistant", "content": f"Welcome. I am operating as a **{persona}**. How can I assist you with your loan terms?"}]
+
+        chat_container = st.container(height=450, border=False)
+
+        with chat_container:
+            for msg in st.session_state.messages:
+                with st.chat_message(msg["role"]):
+                    st.markdown(msg["content"])
+
+            if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+                with st.chat_message("assistant"):
+                    with st.spinner("Synthesizing neural response..."):
+                        prompt = st.session_state.messages[-1]["content"]
+                        enhanced_prompt = f"Act as a {persona}. User Profile: Credit Score {credit_score}, Loan Request ${loan_amount:,}. Answer the following based ONLY on context:\nQuestion: {prompt}"
+                        response = ask(enhanced_prompt)
+
+                    st.markdown(response)
+                    with st.expander("🔍 View AI Thought Process"):
+                        st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
+
+                st.session_state.messages.append({"role": "assistant", "content": response})
+
+        if prompt := st.chat_input("Ask about interest rates, penalties..."):
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.rerun()
+
+    elif st.session_state.active_tab == "Market Trends":
+        st.markdown("### 📈 Live Global Interest Rates")
+        chart_data = pd.DataFrame(
+            np.random.randn(30, 3) + [6, 8, 12],
+            columns=["Mortgage %", "Auto Loan %", "Personal Loan %"]
+        )
+        st.line_chart(chart_data, color=["#8b5cf6", "#0ea5e9", "#ec4899"])
+
+        st.markdown("### 📊 Approval Probability vs Credit Score")
+        bar_data = pd.DataFrame(
+            np.random.rand(5, 1) * 100,
+            index=[">= 800", "740 - 799", "670 - 739", "580 - 669", "< 580"],
+            columns=["Approval Probability (%)"]
+        )
+        st.bar_chart(bar_data, color="#8b5cf6")
+
+    elif st.session_state.active_tab == "System Specs":
+        st.markdown("### 🏛️ Deep Technology Stack")
+        st.info("This interface utilizes Apple Vision Pro-style glassmorphism combined with heavy LLM backend processing.")
+        st.markdown("""
     - **Brain (LLM):** Google Gemini 1.5 Pro
     - **Memory (Vector DB):** Qdrant Local Engine
     - **Embeddings:** FastEmbed (BAAI/bge-small-en-v1.5)
-    - **Frontend:** Streamlit 
+    - **Frontend:** Streamlit
     - **Data Source:** Secure PDF Document Injection
-    """)
-
-# --- ROOT LEVEL CHAT INPUT ---
-if prompt := st.chat_input("Ask about interest rates, penalties..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.rerun()
+        """)
