@@ -235,18 +235,17 @@ textarea {
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# CSS to position clear button visually inside chat input
+# Clear button styled to match the send button
 st.markdown("""
 <style>
-/* Make the bottom chat input wrapper relative so we can position inside it */
+/* Position the column row inside the bottom bar */
 [data-testid="stBottom"] {
     position: relative !important;
 }
-/* Position the clear button column overlapping the chat input */
 [data-testid="stBottom"] [data-testid="stHorizontalBlock"] {
     position: absolute !important;
     right: 56px !important;
-    bottom: 12px !important;
+    bottom: 10px !important;
     z-index: 999 !important;
     width: auto !important;
     margin: 0 !important;
@@ -254,27 +253,34 @@ st.markdown("""
 }
 [data-testid="stBottom"] [data-testid="stHorizontalBlock"] > div {
     padding: 0 !important;
-    min-width: 36px !important;
-    width: 36px !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    max-width: 42px !important;
 }
-[data-testid="stBottom"] button {
-    width: 36px !important;
-    height: 36px !important;
+/* Match exactly the send button style */
+[data-testid="stBottom"] button[kind="secondary"] {
+    width: 42px !important;
+    height: 42px !important;
     padding: 0 !important;
     border-radius: 50% !important;
-    border: 1px solid rgba(239,68,68,0.6) !important;
-    background: rgba(239,68,68,0.12) !important;
+    border: none !important;
+    background: rgb(30, 30, 46) !important;
     min-height: unset !important;
+    box-shadow: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
-[data-testid="stBottom"] button:hover {
+[data-testid="stBottom"] button[kind="secondary"]:hover {
     background: rgba(239,68,68,0.3) !important;
-    box-shadow: 0 0 12px rgba(239,68,68,0.5) !important;
+    border: 1px solid rgba(239,68,68,0.6) !important;
 }
-[data-testid="stBottom"] button p {
-    color: #fca5a5 !important;
-    font-size: 0.9rem !important;
+[data-testid="stBottom"] button[kind="secondary"] p {
+    color: white !important;
+    font-size: 1rem !important;
     line-height: 1 !important;
     margin: 0 !important;
+    white-space: nowrap !important;
 }
 </style>
 """, unsafe_allow_html=True)
