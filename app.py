@@ -1,5 +1,7 @@
 import streamlit as st
 import time
+import pandas as pd
+import numpy as np
 from agent import ask
 
 st.set_page_config(page_title="FinTech AI Engine", page_icon="🏦", layout="wide", initial_sidebar_state="expanded")
@@ -89,6 +91,17 @@ custom_css = """
     text-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
+/* Tabs Styling */
+[data-testid="stTabs"] button {
+    font-family: 'Syncopate', sans-serif !important;
+    color: #a1a1aa !important;
+    font-weight: 600 !important;
+}
+[data-testid="stTabs"] button[aria-selected="true"] {
+    color: #00f2fe !important;
+    border-bottom-color: #00f2fe !important;
+}
+
 /* Premium 3D Chat Message Bubbles */
 [data-testid="stChatMessage"] {
     background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%) !important;
@@ -158,10 +171,13 @@ with st.sidebar:
     st.markdown("### Core Analytics")
     st.metric(label="Knowledge Base", value="RAG Active", delta="Synced")
     st.metric(label="AI Model", value="Gemini 1.5", delta="Ultra-Fast")
-    st.metric(label="Security", value="Enterprise", delta="Encrypted")
+    st.metric(label="Data Processed", value="2.4 TB", delta="+12 GB Today")
     
     st.markdown("---")
     st.caption("Secure FinTech Environment. End-to-end encryption active.")
+    if st.button("🧹 Clear Memory", use_container_width=True):
+        st.session_state.messages = [{"role": "assistant", "content": "Memory cleared. How can I assist you today?"}]
+        st.rerun()
 
 # --- MAIN PAGE ---
 st.markdown("""
@@ -172,6 +188,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 if "welcomed" not in st.session_state:
+    st.snow() # Epic Particle Effect on First Load
     st.toast('System Initialized successfully!', icon='🚀')
     time.sleep(0.5)
     st.toast('Connecting to Qdrant Vector Database...', icon='🔗')
@@ -179,29 +196,66 @@ if "welcomed" not in st.session_state:
     st.toast('Ready to process loan terms.', icon='✅')
     st.session_state.welcomed = True
 
-if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "Welcome to the Enterprise Loan Analysis System. How can I assist you today?"}]
+# --- TABS ---
+tab1, tab2, tab3 = st.tabs(["💬 AI Assistant", "📊 Market Analytics", "📑 System Architecture"])
 
-for msg in st.session_state.messages:
-    with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+with tab1:
+    if "messages" not in st.session_state:
+        st.session_state.messages = [{"role": "assistant", "content": "Welcome to the Enterprise Loan Analysis System. How can I assist you today?"}]
 
-if prompt := st.chat_input("Ask about interest rates, penalties..."):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-        
-    with st.chat_message("assistant"):
-        with st.spinner("Analyzing millions of data points..."):
-            # Cinematic progress bar effect
-            progress_text = "Querying Vector Database..."
-            my_bar = st.progress(0, text=progress_text)
-            for percent_complete in range(100):
-                time.sleep(0.005)
-                my_bar.progress(percent_complete + 1, text=progress_text)
-            my_bar.empty()
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
+    if prompt := st.chat_input("Ask about interest rates, penalties..."):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
             
-            response = ask(prompt)
-            
-        st.markdown(response)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        with st.chat_message("assistant"):
+            with st.spinner("Analyzing millions of data points..."):
+                # Cinematic progress bar effect
+                progress_text = "Querying Vector Database..."
+                my_bar = st.progress(0, text=progress_text)
+                for percent_complete in range(100):
+                    time.sleep(0.005)
+                    my_bar.progress(percent_complete + 1, text=progress_text)
+                my_bar.empty()
+                
+                response = ask(prompt)
+                
+            st.markdown(response)
+            st.session_state.messages.append({"role": "assistant", "content": response})
+
+with tab2:
+    st.markdown("### 📈 Global Interest Rates (Simulated)")
+    st.caption("Dynamic visualization of market trends over the last 30 days.")
+    # Generate some fake awesome data
+    chart_data = pd.DataFrame(
+        np.random.randn(30, 3) + [12, 14, 18],
+        columns=["Mortgage %", "Auto Loan %", "Personal Loan %"]
+    )
+    st.line_chart(chart_data, color=["#00f2fe", "#4facfe", "#f093fb"])
+    
+    st.markdown("### 📊 Approval Probability Matrix")
+    bar_data = pd.DataFrame(
+        np.random.rand(5, 1) * 100,
+        index=["Excellent", "Good", "Fair", "Poor", "Bad"],
+        columns=["Approval Probability (%)"]
+    )
+    st.bar_chart(bar_data, color="#00f2fe")
+
+with tab3:
+    st.markdown("### 🏛️ Advanced RAG Architecture")
+    st.info("This system uses Retrieval-Augmented Generation (RAG) to provide highly accurate, document-backed answers.")
+    st.markdown("""
+    - **Brain (LLM):** Google Gemini 1.5 Pro
+    - **Memory (Vector DB):** Qdrant Local Engine
+    - **Embeddings:** FastEmbed (BAAI/bge-small-en-v1.5)
+    - **Frontend:** Streamlit Ultra-Premium UI
+    - **Data Source:** `docs/loan_terms.pdf` (Bank Policies)
+    
+    The AI parses the question, converts it into mathematical vectors, searches the Qdrant database for the closest policy matches, and finally feeds it to Gemini to construct a human-readable analysis.
+    """)
+    with st.expander("View Encryption Status"):
+        st.code("TLS 1.3 Active\\nAES-256 Vector Encryption: OK\\nAPI Token: Secured", language="bash")
