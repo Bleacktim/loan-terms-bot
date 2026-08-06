@@ -272,7 +272,7 @@ if "welcomed" not in st.session_state:
 if "active_tab" not in st.session_state:
     st.session_state.active_tab = "AI Assistant"
 
-col_tab1, col_tab2, col_tab3, col_tab4, col_clear = st.columns(5)
+col_tab1, col_tab2, col_tab3, col_tab4 = st.columns(4)
 
 with col_tab1:
     if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
@@ -292,12 +292,6 @@ with col_tab3:
 with col_tab4:
     if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
         st.session_state.active_tab = "System Specs"
-        st.rerun()
-
-with col_clear:
-    if st.button("🧹 Clear Memory", type="secondary", use_container_width=True):
-        if "messages" in st.session_state:
-            st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {st.session_state.persona}."}]
         st.rerun()
 
 st.markdown("<br>", unsafe_allow_html=True)
@@ -329,8 +323,33 @@ if st.session_state.active_tab == "AI Assistant":
                     st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
             st.session_state.messages.append({"role": "assistant", "content": response})
 
-    if prompt := st.chat_input("Ask about interest rates, penalties..."):
-        st.session_state.messages.append({"role": "user", "content": prompt})
+    # --- CUSTOM INPUT ROW: [🧹 Clear] + [text input] + [↑ Send] ---
+    st.markdown("""
+    <style>
+    .input-row-clear button { border: 1px solid rgba(239,68,68,0.6) !important; background: rgba(239,68,68,0.1) !important; }
+    .input-row-clear button p { color: #fca5a5 !important; }
+    .input-row-clear button:hover { background: rgba(239,68,68,0.25) !important; border-color: rgba(239,68,68,0.9) !important; }
+    .input-row-send button { border: 1px solid rgba(139,92,246,0.6) !important; background: rgba(139,92,246,0.2) !important; }
+    .input-row-send button p { color: #c4b5fd !important; }
+    .input-row-send button:hover { background: rgba(139,92,246,0.4) !important; border-color: rgba(139,92,246,0.9) !important; box-shadow: 0 0 20px rgba(139,92,246,0.5) !important; }
+    </style>
+    """, unsafe_allow_html=True)
+
+    inp_clear, inp_text, inp_send = st.columns([1, 7, 1])
+    with inp_clear:
+        st.markdown('<div class="input-row-clear">', unsafe_allow_html=True)
+        if st.button("🧹 Clear", use_container_width=True, key="clear_btn_inline"):
+            if "messages" in st.session_state:
+                st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {st.session_state.persona}."}]
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+    with inp_text:
+        user_input = st.chat_input("Ask about interest rates, penalties...")
+    with inp_send:
+        pass
+
+    if user_input:
+        st.session_state.messages.append({"role": "user", "content": user_input})
         st.rerun()
 
 elif st.session_state.active_tab == "Command Center":
