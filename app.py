@@ -16,9 +16,11 @@ custom_css = """
 */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400&display=swap');
 
-#MainMenu, footer, [data-testid="stToolbar"], .viewerBadge_container, .viewerBadge_link, #viewerBadge, [data-testid="manage-app-button"] {visibility: hidden !important; display: none !important;}
-header {background: transparent !important; visibility: visible !important;}
-[data-testid="collapsedControl"] {visibility: visible !important; display: block !important; z-index: 999999 !important; color: white !important; background: rgba(255,255,255,0.1) !important; border-radius: 5px !important;}
+/* Safely hide cloud badges without touching the header layout */
+.viewerBadge_container, .viewerBadge_link, #viewerBadge, [data-testid="manage-app-button"] { display: none !important; }
+#MainMenu, footer { visibility: hidden !important; }
+[data-testid="stHeader"] { background: transparent !important; }
+[data-testid="collapsedControl"] { color: #ffffff !important; background-color: rgba(255, 255, 255, 0.1) !important; border-radius: 5px !important; }
 
 /* Animated Blobs Background */
 .stApp {
