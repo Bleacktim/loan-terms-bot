@@ -5,6 +5,7 @@ import numpy as np
 import random
 from agent import ask
 from i18n import t, get_personas
+from ingest import ingest_pdf_stream
 
 st.set_page_config(page_title="FinTech AI Engine", page_icon="🏦", layout="wide", initial_sidebar_state="expanded")
 
@@ -422,6 +423,10 @@ elif st.session_state.active_tab == "Command Center":
         </div>""", unsafe_allow_html=True)
         uploaded_file = st.file_uploader(t('upload_btn', lang), type=["pdf"], label_visibility="collapsed")
         if uploaded_file:
+            if "last_uploaded_file" not in st.session_state or st.session_state.last_uploaded_file != uploaded_file.name:
+                with st.spinner(t("processing_pdf", lang)):
+                    ingest_pdf_stream(uploaded_file)
+                    st.session_state.last_uploaded_file = uploaded_file.name
             st.success(t('file_recognized', lang))
 
     with cc2:

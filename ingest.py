@@ -19,6 +19,36 @@ def load_chunks(pdf_path, size=900, overlap=150):
             start += size - overlap
     return chunks
 
+def load_chunks_from_stream(file_stream, size=900, overlap=150):
+    reader = PdfReader(file_stream)
+    chunks = []
+    for page_no, page in enumerate(reader.pages, start=1):
+        text = (page.extract_text() or "").strip()
+        if not text:
+            continue
+        start = 0
+        while start < len(text):
+            piece = text[start:start + size]
+            chunks.append({"text": piece, "page": page_no})
+            start += size - overlap
+    return chunks
+
+def ingest_pdf_stream(file_stream):
+    chunks = load_chunks_from_stream(file_stream)
+    dim = len(embed("dimension probe"))
+    client = QdrantClient(path=config.QDRANT_PATH)
+    client.recreate_collection(
+        collection_name=config.COLLECTION,
+        vectors_config=VectorParams(size=dim, distance=Distance.COSINE),
+    )
+    points = []
+    for i, c in enumerate(chunks):
+        points.append(PointStruct(
+            id=i, vector=embed(c["text"]),
+            payload={"text": c["text"], "page": c["page"]},
+        ))
+    client.upsert(collection_name=config.COLLECTION, points=points)
+
 def main():
     chunks = load_chunks(config.PDF_PATH)
     print(f"Loaded {len(chunks)} chunks from {config.PDF_PATH}")

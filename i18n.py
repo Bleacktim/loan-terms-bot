@@ -245,6 +245,11 @@ TRANSLATIONS = {
         "UZ": "~ Taxminiy",
         "RU": "~ Примерно"
     },
+    "processing_pdf": {
+        "EN": "Processing PDF and updating Vector DB...",
+        "UZ": "PDF o'qilmoqda va Vektor bazasi yangilanmoqda...",
+        "RU": "Обработка PDF и обновление векторной БД..."
+    },
     
     # Language names
 
