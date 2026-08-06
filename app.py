@@ -108,15 +108,35 @@ custom_css = """
 }
 
 /* Tabs */
+div[data-baseweb="tab-list"] {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 15px;
+}
+div[data-baseweb="tab-highlight"] {
+    display: none !important;
+}
 [data-testid="stTabs"] button {
     font-family: 'Outfit', sans-serif !important;
     color: #94a3b8 !important;
     font-weight: 600 !important;
-    font-size: 1.1rem !important;
+    font-size: 1.3rem !important;
+    padding: 12px 24px !important;
+    border-radius: 50px !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: all 0.3s ease !important;
+}
+[data-testid="stTabs"] button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    transform: translateY(-2px);
 }
 [data-testid="stTabs"] button[aria-selected="true"] {
-    color: #8b5cf6 !important;
-    border-bottom-color: #8b5cf6 !important;
+    color: #fff !important;
+    background: linear-gradient(135deg, #8b5cf6, #0ea5e9) !important;
+    border: none !important;
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4) !important;
 }
 
 /* Chat Messages */
