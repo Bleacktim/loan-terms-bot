@@ -234,22 +234,25 @@ with tab1:
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": f"Welcome. I am operating as a **{persona}**. How can I assist you with your loan terms?"}]
 
-    for msg in st.session_state.messages:
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
-            
-    if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
-        with st.chat_message("assistant"):
-            with st.spinner("Synthesizing neural response..."):
-                prompt = st.session_state.messages[-1]["content"]
-                enhanced_prompt = f"Act as a {persona}. User Profile: Credit Score {credit_score}, Loan Request ${loan_amount:,}. Answer the following based ONLY on context:\nQuestion: {prompt}"
-                response = ask(enhanced_prompt)
+    chat_container = st.container(height=450, border=False)
+
+    with chat_container:
+        for msg in st.session_state.messages:
+            with st.chat_message(msg["role"]):
+                st.markdown(msg["content"])
                 
-            st.markdown(response)
-            with st.expander("🔍 View AI Thought Process"):
-                st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
-                
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+            with st.chat_message("assistant"):
+                with st.spinner("Synthesizing neural response..."):
+                    prompt = st.session_state.messages[-1]["content"]
+                    enhanced_prompt = f"Act as a {persona}. User Profile: Credit Score {credit_score}, Loan Request ${loan_amount:,}. Answer the following based ONLY on context:\nQuestion: {prompt}"
+                    response = ask(enhanced_prompt)
+                    
+                st.markdown(response)
+                with st.expander("🔍 View AI Thought Process"):
+                    st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
+                    
+            st.session_state.messages.append({"role": "assistant", "content": response})
 
 with tab2:
     st.markdown("### 📈 Live Global Interest Rates")
