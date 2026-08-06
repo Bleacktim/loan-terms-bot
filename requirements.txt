@@ -1,0 +1,6 @@
+google-genai
+qdrant-client
+pypdf
+python-dotenv
+gradio
+fpdf
