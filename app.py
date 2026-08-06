@@ -155,22 +155,24 @@ button[kind="primary"] p {
     margin: 0 !important;
 }
 button[kind="secondary"] {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+    border: 1px solid rgba(139, 92, 246, 0.4) !important;
     border-radius: 50px !important;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255,255,255,0.1) !important;
     transition: all 0.3s ease !important;
     padding: 10px 15px !important;
+    backdrop-filter: blur(10px) !important;
 }
 button[kind="secondary"]:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    transform: translateY(-3px) !important;
+    background: rgba(139, 92, 246, 0.2) !important;
+    border-color: rgba(139, 92, 246, 0.8) !important;
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4) !important;
+    transform: translateY(-2px) !important;
 }
 button[kind="secondary"] p {
-    color: #94a3b8 !important;
+    color: #cbd5e1 !important;
     font-family: 'Outfit', sans-serif !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     font-size: 1.05rem !important;
     white-space: nowrap !important;
     margin: 0 !important;
