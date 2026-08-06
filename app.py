@@ -347,20 +347,53 @@ with main_right:
             st.rerun()
 
     elif st.session_state.active_tab == "Market Trends":
-        st.markdown("### 📈 Live Global Interest Rates")
-        chart_data = pd.DataFrame(
-            np.random.randn(30, 3) + [6, 8, 12],
-            columns=["Mortgage %", "Auto Loan %", "Personal Loan %"]
-        )
-        st.line_chart(chart_data, color=["#8b5cf6", "#0ea5e9", "#ec4899"])
+        # --- METRIC CARDS ---
+        m1, m2, m3, m4 = st.columns(4)
+        with m1:
+            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(14,165,233,0.05));border:1px solid rgba(14,165,233,0.4);border-radius:16px;padding:16px;text-align:center">
+                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Mortgage Rate</div>
+                <div style="font-size:2rem;font-weight:800;color:#0ea5e9;margin:4px 0">{round(random.uniform(6.2, 7.8), 2)}%</div>
+                <div style="font-size:0.8rem;color:#22c55e">▲ +0.12%</div></div>""", unsafe_allow_html=True)
+        with m2:
+            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(139,92,246,0.05));border:1px solid rgba(139,92,246,0.4);border-radius:16px;padding:16px;text-align:center">
+                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Auto Loan</div>
+                <div style="font-size:2rem;font-weight:800;color:#8b5cf6;margin:4px 0">{round(random.uniform(7.5, 9.5), 2)}%</div>
+                <div style="font-size:0.8rem;color:#ef4444">▼ -0.05%</div></div>""", unsafe_allow_html=True)
+        with m3:
+            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(236,72,153,0.15),rgba(236,72,153,0.05));border:1px solid rgba(236,72,153,0.4);border-radius:16px;padding:16px;text-align:center">
+                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Personal Loan</div>
+                <div style="font-size:2rem;font-weight:800;color:#ec4899;margin:4px 0">{round(random.uniform(10.5, 14.0), 2)}%</div>
+                <div style="font-size:0.8rem;color:#22c55e">▲ +0.31%</div></div>""", unsafe_allow_html=True)
+        with m4:
+            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.4);border-radius:16px;padding:16px;text-align:center">
+                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Prime Rate</div>
+                <div style="font-size:2rem;font-weight:800;color:#22c55e;margin:4px 0">{round(random.uniform(5.0, 5.5), 2)}%</div>
+                <div style="font-size:0.8rem;color:#94a3b8">— Stable</div></div>""", unsafe_allow_html=True)
 
-        st.markdown("### 📊 Approval Probability vs Credit Score")
-        bar_data = pd.DataFrame(
-            np.random.rand(5, 1) * 100,
-            index=[">= 800", "740 - 799", "670 - 739", "580 - 669", "< 580"],
-            columns=["Approval Probability (%)"]
-        )
-        st.bar_chart(bar_data, color="#8b5cf6")
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # --- CHARTS ---
+        c1, c2 = st.columns(2)
+        with c1:
+            st.markdown("""<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px 16px 4px">
+                <div style="font-size:0.9rem;font-weight:700;color:#e2e8f0;margin-bottom:8px">📈 Live Interest Rate Trends</div>""", unsafe_allow_html=True)
+            chart_data = pd.DataFrame(
+                np.random.randn(30, 3) + [6, 8, 12],
+                columns=["Mortgage %", "Auto Loan %", "Personal Loan %"]
+            )
+            st.line_chart(chart_data, color=["#0ea5e9", "#8b5cf6", "#ec4899"], height=200)
+            st.markdown("</div>", unsafe_allow_html=True)
+        with c2:
+            st.markdown("""<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px 16px 4px">
+                <div style="font-size:0.9rem;font-weight:700;color:#e2e8f0;margin-bottom:8px">📊 Approval Rate by Credit Score</div>""", unsafe_allow_html=True)
+            bar_data = pd.DataFrame(
+                [95, 82, 67, 45, 22],
+                index=[">= 800", "740-799", "670-739", "580-669", "< 580"],
+                columns=["Approval %"]
+            )
+            st.bar_chart(bar_data, color="#8b5cf6", height=200)
+            st.markdown("</div>", unsafe_allow_html=True)
+
 
     elif st.session_state.active_tab == "System Specs":
         st.markdown("### 🏛️ Deep Technology Stack")
