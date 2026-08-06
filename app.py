@@ -322,6 +322,8 @@ with col_h2:
     if lang_choice != st.session_state.lang:
         st.session_state.lang = lang_choice
         st.session_state.persona = get_personas(lang_choice)[0]
+        if "messages" in st.session_state:
+            del st.session_state["messages"]
         st.rerun()
 
 if "welcomed" not in st.session_state:
