@@ -26,9 +26,26 @@ custom_css = """
 [data-testid="stToolbarActionBtn"] { display: none !important; }
 header [data-testid="stToolbar"] > div:last-child { visibility: hidden !important; }
 
-/* Force sidebar toggle SVG to be white and visible in case of dark mode conflicts */
-[data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"] { visibility: visible !important; display: block !important; }
-[data-testid="collapsedControl"] svg, [data-testid="stSidebarCollapsedControl"] svg { fill: white !important; stroke: white !important; color: white !important; }
+/* Force sidebar toggle to always show - position fixed so it's always on screen */
+[data-testid="collapsedControl"] {
+    visibility: visible !important;
+    display: flex !important;
+    position: fixed !important;
+    top: 14px !important;
+    left: 14px !important;
+    z-index: 9999999 !important;
+    background: rgba(139, 92, 246, 0.3) !important;
+    border: 1px solid rgba(139, 92, 246, 0.6) !important;
+    border-radius: 8px !important;
+    padding: 4px 8px !important;
+    backdrop-filter: blur(10px) !important;
+}
+[data-testid="collapsedControl"] svg,
+[data-testid="stSidebarCollapsedControl"] svg { 
+    fill: white !important; 
+    stroke: white !important; 
+    color: white !important; 
+}
 
 /* Animated Blobs Background */
 .stApp {
