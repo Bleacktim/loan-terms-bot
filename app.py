@@ -212,6 +212,17 @@ textarea {
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
+# Auto-open the sidebar using JavaScript on first load
+st.markdown("""
+<script>
+    // Wait for Streamlit to render, then click the sidebar toggle if sidebar is collapsed
+    setTimeout(function() {
+        var toggleBtn = window.parent.document.querySelector('[data-testid="collapsedControl"]');
+        if (toggleBtn) { toggleBtn.click(); }
+    }, 500);
+</script>
+""", unsafe_allow_html=True)
+
 # --- SIDEBAR DASHBOARD ---
 with st.sidebar:
     st.markdown("<h1>⚙️ Command Center</h1>", unsafe_allow_html=True)
