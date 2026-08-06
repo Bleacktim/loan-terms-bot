@@ -225,183 +225,173 @@ st.markdown("""
 </script>
 """, unsafe_allow_html=True)
 
-# --- MAIN LAYOUT: Left Panel + Right Content ---
-main_left, main_right = st.columns([1, 2.8], gap="large")
+# --- DEFAULT VALUES (used if Command Center tab not visited yet) ---
+if "persona" not in st.session_state:
+    st.session_state.persona = "Friendly Advisor"
+if "credit_score" not in st.session_state:
+    st.session_state.credit_score = 720
+if "loan_amount" not in st.session_state:
+    st.session_state.loan_amount = 50000
 
-with main_left:
-    st.markdown("""
-    <div style="
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 20px;
-        padding: 24px 20px;
-        backdrop-filter: blur(20px);
-        height: 100%;
-    ">
-    <h3 style="color: white; margin-top: 0;">⚙️ Command Center</h3>
-    </div>
-    """, unsafe_allow_html=True)
+# --- MAIN PAGE HEADER ---
+st.markdown("""
+<div class="ultra-header">
+    <h1>FinTech AI</h1>
+    <p>Spatial Computing Interface</p>
+</div>
+""", unsafe_allow_html=True)
 
-    st.markdown("### 🤖 AI Persona")
-    persona = st.selectbox(
-        "Choose how the AI should act:",
-        ["Friendly Advisor", "Strict Corporate Banker", "Legal Analyst"],
-        label_visibility="collapsed"
-    )
+if "welcomed" not in st.session_state:
+    st.toast('Spatial Interface Initialized.', icon='🚀')
+    time.sleep(0.5)
+    st.toast('Vector Neural Engine Online.', icon='🧠')
+    st.session_state.welcomed = True
 
-    st.markdown("### 👤 Financial Profile")
-    credit_score = st.slider("Credit Score", min_value=300, max_value=850, value=720, step=10)
-    loan_amount = st.number_input("Desired Loan Amount ($)", min_value=1000, value=50000, step=5000)
+# --- CUSTOM TABS ---
+if "active_tab" not in st.session_state:
+    st.session_state.active_tab = "AI Assistant"
 
-    st.markdown("### 📄 Additional Data")
-    uploaded_file = st.file_uploader("Upload External Contract (PDF)", type=["pdf"])
-    if uploaded_file:
-        st.success("File recognized. AI is analyzing...")
+col_tab1, col_tab2, col_tab3, col_tab4, col_clear = st.columns(5)
 
-    st.markdown("---")
-
-    if "messages" in st.session_state and len(st.session_state.messages) > 1:
-        chat_export = ""
-        for msg in st.session_state.messages:
-            chat_export += f"{msg['role'].upper()}: {msg['content']}\n\n"
-        st.download_button(
-            label="📥 Download Audit Log",
-            data=chat_export,
-            file_name="fintech_audit_log.txt",
-            mime="text/plain",
-            use_container_width=True
-        )
-
-
-with main_right:
-    # --- MAIN PAGE HEADER ---
-    st.markdown("""
-    <div class="ultra-header">
-        <h1>FinTech AI</h1>
-        <p>Spatial Computing Interface</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    if "welcomed" not in st.session_state:
-        st.toast('Spatial Interface Initialized.', icon='🚀')
-        time.sleep(0.5)
-        st.toast('Vector Neural Engine Online.', icon='🧠')
-        st.session_state.welcomed = True
-
-    # --- CUSTOM TABS ---
-    if "active_tab" not in st.session_state:
+with col_tab1:
+    if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
         st.session_state.active_tab = "AI Assistant"
+        st.rerun()
 
-    col_tab1, col_tab2, col_tab3, col_clear = st.columns(4)
+with col_tab2:
+    if st.button("⚙️ Command Center", type="primary" if st.session_state.active_tab == "Command Center" else "secondary", use_container_width=True):
+        st.session_state.active_tab = "Command Center"
+        st.rerun()
 
-    with col_tab1:
-        if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
-            st.session_state.active_tab = "AI Assistant"
-            st.rerun()
+with col_tab3:
+    if st.button("📊 Market Trends", type="primary" if st.session_state.active_tab == "Market Trends" else "secondary", use_container_width=True):
+        st.session_state.active_tab = "Market Trends"
+        st.rerun()
 
-    with col_tab2:
-        if st.button("📊 Market Trends", type="primary" if st.session_state.active_tab == "Market Trends" else "secondary", use_container_width=True):
-            st.session_state.active_tab = "Market Trends"
-            st.rerun()
+with col_tab4:
+    if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
+        st.session_state.active_tab = "System Specs"
+        st.rerun()
 
-    with col_tab3:
-        if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
-            st.session_state.active_tab = "System Specs"
-            st.rerun()
+with col_clear:
+    if st.button("🧹 Clear Memory", type="secondary", use_container_width=True):
+        if "messages" in st.session_state:
+            st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {st.session_state.persona}."}]
+        st.rerun()
 
-    with col_clear:
-        if st.button("🧹 Clear Memory", type="secondary", use_container_width=True):
-            if "messages" in st.session_state:
-                st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {persona}."}]
-            st.rerun()
+st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
+# ==================== TAB CONTENT ====================
 
+if st.session_state.active_tab == "AI Assistant":
+    persona = st.session_state.persona
+    credit_score = st.session_state.credit_score
+    loan_amount = st.session_state.loan_amount
 
-    if st.session_state.active_tab == "AI Assistant":
-        if "messages" not in st.session_state:
-            st.session_state.messages = [{"role": "assistant", "content": f"Welcome. I am operating as a **{persona}**. How can I assist you with your loan terms?"}]
+    if "messages" not in st.session_state:
+        st.session_state.messages = [{"role": "assistant", "content": f"Welcome. I am operating as a **{persona}**. How can I assist you with your loan terms?"}]
 
-        chat_container = st.container(height=450, border=False)
+    chat_container = st.container(height=450, border=False)
+    with chat_container:
+        for msg in st.session_state.messages:
+            with st.chat_message(msg["role"]):
+                st.markdown(msg["content"])
 
-        with chat_container:
-            for msg in st.session_state.messages:
-                with st.chat_message(msg["role"]):
-                    st.markdown(msg["content"])
+        if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
+            with st.chat_message("assistant"):
+                with st.spinner("Synthesizing neural response..."):
+                    prompt = st.session_state.messages[-1]["content"]
+                    enhanced_prompt = f"Act as a {persona}. User Profile: Credit Score {credit_score}, Loan Request ${loan_amount:,}. Answer the following based ONLY on context:\nQuestion: {prompt}"
+                    response = ask(enhanced_prompt)
+                st.markdown(response)
+                with st.expander("🔍 View AI Thought Process"):
+                    st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
+            st.session_state.messages.append({"role": "assistant", "content": response})
 
-            if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
-                with st.chat_message("assistant"):
-                    with st.spinner("Synthesizing neural response..."):
-                        prompt = st.session_state.messages[-1]["content"]
-                        enhanced_prompt = f"Act as a {persona}. User Profile: Credit Score {credit_score}, Loan Request ${loan_amount:,}. Answer the following based ONLY on context:\nQuestion: {prompt}"
-                        response = ask(enhanced_prompt)
+    if prompt := st.chat_input("Ask about interest rates, penalties..."):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.rerun()
 
-                    st.markdown(response)
-                    with st.expander("🔍 View AI Thought Process"):
-                        st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
-
-                st.session_state.messages.append({"role": "assistant", "content": response})
-
-        if prompt := st.chat_input("Ask about interest rates, penalties..."):
-            st.session_state.messages.append({"role": "user", "content": prompt})
-            st.rerun()
-
-    elif st.session_state.active_tab == "Market Trends":
-        # --- METRIC CARDS ---
-        m1, m2, m3, m4 = st.columns(4)
-        with m1:
-            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(14,165,233,0.05));border:1px solid rgba(14,165,233,0.4);border-radius:16px;padding:16px;text-align:center">
-                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Mortgage Rate</div>
-                <div style="font-size:2rem;font-weight:800;color:#0ea5e9;margin:4px 0">{round(random.uniform(6.2, 7.8), 2)}%</div>
-                <div style="font-size:0.8rem;color:#22c55e">▲ +0.12%</div></div>""", unsafe_allow_html=True)
-        with m2:
-            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(139,92,246,0.05));border:1px solid rgba(139,92,246,0.4);border-radius:16px;padding:16px;text-align:center">
-                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Auto Loan</div>
-                <div style="font-size:2rem;font-weight:800;color:#8b5cf6;margin:4px 0">{round(random.uniform(7.5, 9.5), 2)}%</div>
-                <div style="font-size:0.8rem;color:#ef4444">▼ -0.05%</div></div>""", unsafe_allow_html=True)
-        with m3:
-            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(236,72,153,0.15),rgba(236,72,153,0.05));border:1px solid rgba(236,72,153,0.4);border-radius:16px;padding:16px;text-align:center">
-                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Personal Loan</div>
-                <div style="font-size:2rem;font-weight:800;color:#ec4899;margin:4px 0">{round(random.uniform(10.5, 14.0), 2)}%</div>
-                <div style="font-size:0.8rem;color:#22c55e">▲ +0.31%</div></div>""", unsafe_allow_html=True)
-        with m4:
-            st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.4);border-radius:16px;padding:16px;text-align:center">
-                <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Prime Rate</div>
-                <div style="font-size:2rem;font-weight:800;color:#22c55e;margin:4px 0">{round(random.uniform(5.0, 5.5), 2)}%</div>
-                <div style="font-size:0.8rem;color:#94a3b8">— Stable</div></div>""", unsafe_allow_html=True)
+elif st.session_state.active_tab == "Command Center":
+    cc1, cc2 = st.columns(2, gap="large")
+    with cc1:
+        st.markdown("""<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(139,92,246,0.3);border-radius:20px;padding:28px">
+        <h3 style="color:white;margin-top:0">🤖 AI Persona</h3>
+        <p style="color:#94a3b8;font-size:0.9rem">Choose how the AI should behave during your session.</p>
+        </div>""", unsafe_allow_html=True)
+        persona_choice = st.selectbox("AI Persona", ["Friendly Advisor", "Strict Corporate Banker", "Legal Analyst"], index=["Friendly Advisor", "Strict Corporate Banker", "Legal Analyst"].index(st.session_state.persona), label_visibility="collapsed")
+        st.session_state.persona = persona_choice
 
         st.markdown("<br>", unsafe_allow_html=True)
+        st.markdown("""<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(14,165,233,0.3);border-radius:20px;padding:28px">
+        <h3 style="color:white;margin-top:0">📄 Additional Data</h3>
+        <p style="color:#94a3b8;font-size:0.9rem">Upload an external contract for AI to analyze.</p>
+        </div>""", unsafe_allow_html=True)
+        uploaded_file = st.file_uploader("Upload External Contract (PDF)", type=["pdf"], label_visibility="collapsed")
+        if uploaded_file:
+            st.success("File recognized. AI is analyzing...")
 
-        # --- CHARTS ---
-        c1, c2 = st.columns(2)
-        with c1:
-            st.markdown("""<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px 16px 4px">
-                <div style="font-size:0.9rem;font-weight:700;color:#e2e8f0;margin-bottom:8px">📈 Live Interest Rate Trends</div>""", unsafe_allow_html=True)
-            chart_data = pd.DataFrame(
-                np.random.randn(30, 3) + [6, 8, 12],
-                columns=["Mortgage %", "Auto Loan %", "Personal Loan %"]
-            )
-            st.line_chart(chart_data, color=["#0ea5e9", "#8b5cf6", "#ec4899"], height=200)
-            st.markdown("</div>", unsafe_allow_html=True)
-        with c2:
-            st.markdown("""<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px 16px 4px">
-                <div style="font-size:0.9rem;font-weight:700;color:#e2e8f0;margin-bottom:8px">📊 Approval Rate by Credit Score</div>""", unsafe_allow_html=True)
-            bar_data = pd.DataFrame(
-                [95, 82, 67, 45, 22],
-                index=[">= 800", "740-799", "670-739", "580-669", "< 580"],
-                columns=["Approval %"]
-            )
-            st.bar_chart(bar_data, color="#8b5cf6", height=200)
-            st.markdown("</div>", unsafe_allow_html=True)
+    with cc2:
+        st.markdown("""<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(236,72,153,0.3);border-radius:20px;padding:28px">
+        <h3 style="color:white;margin-top:0">👤 Financial Profile</h3>
+        <p style="color:#94a3b8;font-size:0.9rem">Set your financial parameters to personalize AI responses.</p>
+        </div>""", unsafe_allow_html=True)
+        st.session_state.credit_score = st.slider("Credit Score", min_value=300, max_value=850, value=st.session_state.credit_score, step=10)
+        st.session_state.loan_amount = st.number_input("Desired Loan Amount ($)", min_value=1000, value=st.session_state.loan_amount, step=5000)
 
+        st.markdown("<br>", unsafe_allow_html=True)
+        if "messages" in st.session_state and len(st.session_state.messages) > 1:
+            chat_export = ""
+            for msg in st.session_state.messages:
+                chat_export += f"{msg['role'].upper()}: {msg['content']}\n\n"
+            st.download_button(label="📥 Download Audit Log", data=chat_export, file_name="fintech_audit_log.txt", mime="text/plain", use_container_width=True)
 
-    elif st.session_state.active_tab == "System Specs":
-        st.markdown("### 🏛️ Deep Technology Stack")
-        st.info("This interface utilizes Apple Vision Pro-style glassmorphism combined with heavy LLM backend processing.")
-        st.markdown("""
-    - **Brain (LLM):** Google Gemini 1.5 Pro
-    - **Memory (Vector DB):** Qdrant Local Engine
-    - **Embeddings:** FastEmbed (BAAI/bge-small-en-v1.5)
-    - **Frontend:** Streamlit
-    - **Data Source:** Secure PDF Document Injection
-        """)
+elif st.session_state.active_tab == "Market Trends":
+    m1, m2, m3, m4 = st.columns(4)
+    with m1:
+        st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(14,165,233,0.05));border:1px solid rgba(14,165,233,0.4);border-radius:16px;padding:16px;text-align:center">
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Mortgage Rate</div>
+            <div style="font-size:2rem;font-weight:800;color:#0ea5e9;margin:4px 0">{round(random.uniform(6.2, 7.8), 2)}%</div>
+            <div style="font-size:0.8rem;color:#22c55e">▲ +0.12%</div></div>""", unsafe_allow_html=True)
+    with m2:
+        st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(139,92,246,0.05));border:1px solid rgba(139,92,246,0.4);border-radius:16px;padding:16px;text-align:center">
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Auto Loan</div>
+            <div style="font-size:2rem;font-weight:800;color:#8b5cf6;margin:4px 0">{round(random.uniform(7.5, 9.5), 2)}%</div>
+            <div style="font-size:0.8rem;color:#ef4444">▼ -0.05%</div></div>""", unsafe_allow_html=True)
+    with m3:
+        st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(236,72,153,0.15),rgba(236,72,153,0.05));border:1px solid rgba(236,72,153,0.4);border-radius:16px;padding:16px;text-align:center">
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Personal Loan</div>
+            <div style="font-size:2rem;font-weight:800;color:#ec4899;margin:4px 0">{round(random.uniform(10.5, 14.0), 2)}%</div>
+            <div style="font-size:0.8rem;color:#22c55e">▲ +0.31%</div></div>""", unsafe_allow_html=True)
+    with m4:
+        st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.4);border-radius:16px;padding:16px;text-align:center">
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">Prime Rate</div>
+            <div style="font-size:2rem;font-weight:800;color:#22c55e;margin:4px 0">{round(random.uniform(5.0, 5.5), 2)}%</div>
+            <div style="font-size:0.8rem;color:#94a3b8">— Stable</div></div>""", unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("""<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px 16px 4px">
+            <div style="font-size:0.9rem;font-weight:700;color:#e2e8f0;margin-bottom:8px">📈 Live Interest Rate Trends</div>""", unsafe_allow_html=True)
+        chart_data = pd.DataFrame(np.random.randn(30, 3) + [6, 8, 12], columns=["Mortgage %", "Auto Loan %", "Personal Loan %"])
+        st.line_chart(chart_data, color=["#0ea5e9", "#8b5cf6", "#ec4899"], height=200)
+        st.markdown("</div>", unsafe_allow_html=True)
+    with c2:
+        st.markdown("""<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px 16px 4px">
+            <div style="font-size:0.9rem;font-weight:700;color:#e2e8f0;margin-bottom:8px">📊 Approval Rate by Credit Score</div>""", unsafe_allow_html=True)
+        bar_data = pd.DataFrame([95, 82, 67, 45, 22], index=[">= 800", "740-799", "670-739", "580-669", "< 580"], columns=["Approval %"])
+        st.bar_chart(bar_data, color="#8b5cf6", height=200)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+elif st.session_state.active_tab == "System Specs":
+    st.markdown("### 🏛️ Deep Technology Stack")
+    st.info("This interface utilizes Apple Vision Pro-style glassmorphism combined with heavy LLM backend processing.")
+    st.markdown("""
+- **Brain (LLM):** Google Gemini 1.5 Pro
+- **Memory (Vector DB):** Qdrant Local Engine
+- **Embeddings:** FastEmbed (BAAI/bge-small-en-v1.5)
+- **Frontend:** Streamlit
+- **Data Source:** Secure PDF Document Injection
+    """)
+
