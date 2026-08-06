@@ -235,70 +235,50 @@ textarea {
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Inject Clear button inside chat input via JavaScript
+# CSS to position clear button visually inside chat input
 st.markdown("""
-<script>
-(function injectClearBtn() {
-    function tryInject() {
-        var doc = window.parent.document;
-        var chatInputDiv = doc.querySelector('[data-testid="stChatInput"] > div');
-        var sendBtn = doc.querySelector('[data-testid="stChatInputSubmitButton"]');
-
-        if (!chatInputDiv || !sendBtn || doc.getElementById('inline-clear-btn')) return;
-
-        var clearBtn = doc.createElement('button');
-        clearBtn.id = 'inline-clear-btn';
-        clearBtn.title = 'Clear chat memory';
-        clearBtn.innerHTML = '🧹';
-        clearBtn.style.cssText = [
-            'background: rgba(239,68,68,0.15)',
-            'border: 1px solid rgba(239,68,68,0.55)',
-            'border-radius: 50%',
-            'color: #fca5a5',
-            'cursor: pointer',
-            'font-size: 1rem',
-            'width: 36px',
-            'height: 36px',
-            'display: flex',
-            'align-items: center',
-            'justify-content: center',
-            'flex-shrink: 0',
-            'transition: all 0.2s ease',
-            'margin-right: 6px'
-        ].join(';');
-
-        clearBtn.onmouseover = function() {
-            this.style.background = 'rgba(239,68,68,0.35)';
-            this.style.borderColor = 'rgba(239,68,68,0.9)';
-            this.style.boxShadow = '0 0 12px rgba(239,68,68,0.4)';
-        };
-        clearBtn.onmouseout = function() {
-            this.style.background = 'rgba(239,68,68,0.15)';
-            this.style.borderColor = 'rgba(239,68,68,0.55)';
-            this.style.boxShadow = 'none';
-        };
-        clearBtn.onclick = function(e) {
-            e.preventDefault();
-            // Trigger Streamlit clear via session state key
-            var hiddenInput = doc.querySelector('#clear-trigger-input input');
-            if (hiddenInput) {
-                hiddenInput.value = 'clear_' + Date.now();
-                hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-        };
-
-        chatInputDiv.insertBefore(clearBtn, sendBtn);
-        chatInputDiv.style.display = 'flex';
-        chatInputDiv.style.alignItems = 'center';
-    }
-
-    var observer = new MutationObserver(tryInject);
-    observer.observe(window.parent.document.body, { childList: true, subtree: true });
-    setTimeout(tryInject, 800);
-    setTimeout(tryInject, 2000);
-})();
-</script>
+<style>
+/* Make the bottom chat input wrapper relative so we can position inside it */
+[data-testid="stBottom"] {
+    position: relative !important;
+}
+/* Position the clear button column overlapping the chat input */
+[data-testid="stBottom"] [data-testid="stHorizontalBlock"] {
+    position: absolute !important;
+    right: 56px !important;
+    bottom: 12px !important;
+    z-index: 999 !important;
+    width: auto !important;
+    margin: 0 !important;
+    gap: 0 !important;
+}
+[data-testid="stBottom"] [data-testid="stHorizontalBlock"] > div {
+    padding: 0 !important;
+    min-width: 36px !important;
+    width: 36px !important;
+}
+[data-testid="stBottom"] button {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(239,68,68,0.6) !important;
+    background: rgba(239,68,68,0.12) !important;
+    min-height: unset !important;
+}
+[data-testid="stBottom"] button:hover {
+    background: rgba(239,68,68,0.3) !important;
+    box-shadow: 0 0 12px rgba(239,68,68,0.5) !important;
+}
+[data-testid="stBottom"] button p {
+    color: #fca5a5 !important;
+    font-size: 0.9rem !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+}
+</style>
 """, unsafe_allow_html=True)
+
 
 # --- DEFAULT VALUES (used if Command Center tab not visited yet) ---
 if "persona" not in st.session_state:
@@ -377,16 +357,17 @@ if st.session_state.active_tab == "AI Assistant":
                     st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
             st.session_state.messages.append({"role": "assistant", "content": response})
 
-    # Chat input — Clear button is injected by JS inside this field
-    if prompt := st.chat_input("Ask about interest rates, penalties..."):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        st.rerun()
+    # Chat input row — CSS positions the button column inside the input
+    _c_input, _c_clear = st.columns([10, 1])
+    with _c_input:
+        if prompt := st.chat_input("Ask about interest rates, penalties..."):
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            st.rerun()
+    with _c_clear:
+        if st.button("🧹", key="clear_inline", use_container_width=True):
+            st.session_state.messages = [{"role": "assistant", "content": f"Memory cleared. New session as {st.session_state.persona}."}]
+            st.rerun()
 
-    # Hidden clear trigger (read by JS-injected clear button)
-    if st.session_state.get("do_clear"):
-        st.session_state.do_clear = False
-        st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped. Starting fresh as a {st.session_state.persona}."}]
-        st.rerun()
 
 elif st.session_state.active_tab == "Command Center":
     cc1, cc2 = st.columns(2, gap="large")
