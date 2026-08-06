@@ -16,24 +16,13 @@ custom_css = """
 */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400&display=swap');
 
-/* Safely hide cloud badges without touching the header layout */
+/* Safely hide cloud badges */
 .viewerBadge_container, .viewerBadge_link, #viewerBadge, [data-testid="manage-app-button"] { display: none !important; }
 #MainMenu, footer { display: none !important; }
 
 /* Hide Share and Github buttons INSIDE the toolbar, keep toolbar intact */
 [data-testid="stToolbar"] button { display: none !important; }
 [data-testid="stToolbar"] a { display: none !important; }
-[data-testid="stHeader"] { background: transparent !important; }
-
-/* Ensure Sidebar toggle is highly visible and clickable */
-[data-testid="collapsedControl"] { 
-    visibility: visible !important; 
-    display: flex !important; 
-    z-index: 999999 !important; 
-    color: white !important; 
-    background-color: rgba(255, 255, 255, 0.1) !important; 
-    border-radius: 5px !important; 
-}
 
 /* Animated Blobs Background */
 .stApp {
