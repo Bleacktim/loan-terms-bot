@@ -383,7 +383,13 @@ if st.session_state.active_tab == "AI Assistant":
                     response = ask(enhanced_prompt, lang=lang)
                 st.markdown(response)
                 with st.expander(t("thought_process", lang)):
-                    st.code(f"Query parsed in {round(random.uniform(0.1, 0.4), 2)}s\nVector DB matches found: {random.randint(4, 12)}\nPersona applied: {persona}\nConfidence Score: {round(random.uniform(92.5, 99.9), 1)}%", language="yaml")
+                    thought_text = (
+                        f"{t('query_parsed', lang)}: {round(random.uniform(0.1, 0.4), 2)}s\n"
+                        f"{t('vector_matches', lang)}: {random.randint(4, 12)}\n"
+                        f"{t('persona_applied', lang)}: {persona}\n"
+                        f"{t('confidence_score', lang)}: {round(random.uniform(92.5, 99.9), 1)}%"
+                    )
+                    st.code(thought_text, language="yaml")
             st.session_state.messages.append({"role": "assistant", "content": response})
 
     # Chat input

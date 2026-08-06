@@ -217,6 +217,28 @@ TRANSLATIONS = {
         "RU": "Здравствуйте! Как я могу помочь вам с условиями кредита сегодня?"
     },
     
+    # Thought Process Metrics
+    "query_parsed": {
+        "EN": "Query parsed in",
+        "UZ": "So'rov tahlil qilindi:",
+        "RU": "Запрос обработан за"
+    },
+    "vector_matches": {
+        "EN": "Vector DB matches found",
+        "UZ": "Vektor bazasidan topilgan mosliklar",
+        "RU": "Найдено совпадений в Векторной БД"
+    },
+    "persona_applied": {
+        "EN": "Persona applied",
+        "UZ": "Qo'llanilgan qiyofa",
+        "RU": "Примененная роль"
+    },
+    "confidence_score": {
+        "EN": "Confidence Score",
+        "UZ": "Ishonch darajasi",
+        "RU": "Уровень уверенности"
+    },
+    
     # Language names
 
     "lang_en": {"EN": "English", "UZ": "English", "RU": "English"},
