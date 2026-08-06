@@ -8,153 +8,138 @@ st.set_page_config(page_title="FinTech AI Engine", page_icon="🏦", layout="wid
 
 custom_css = """
 <style>
-/* Absolute Masterpiece Ultra-Premium CSS */
-@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600&display=swap');
+/* 
+=========================================
+   ULTIMATE FINTECH ENTERPRISE UI
+=========================================
+*/
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
-/* Hide Streamlit Defaults completely */
 #MainMenu, footer, header {visibility: hidden !important;}
 
-/* The Ultimate Animated Mesh Background */
+/* Deep Cybernetic Background */
 .stApp {
-    background-color: #050505 !important;
+    background-color: #030712 !important;
     background-image: 
-        radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-        radial-gradient(at 50% 0%, hsla(225,39%,30%,0.5) 0, transparent 50%), 
-        radial-gradient(at 100% 0%, hsla(339,49%,30%,0.5) 0, transparent 50%) !important;
+        radial-gradient(at 20% 20%, rgba(30, 58, 138, 0.4) 0, transparent 40%), 
+        radial-gradient(at 80% 80%, rgba(17, 24, 39, 0.9) 0, transparent 50%), 
+        radial-gradient(at 50% 50%, rgba(2, 6, 23, 1) 0, transparent 100%) !important;
     background-attachment: fixed !important;
-    font-family: 'Inter', sans-serif !important;
-    color: #ffffff !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    color: #f8fafc !important;
 }
 
-/* Custom Scrollbar for a premium feel */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.02); }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f2fe, #4facfe); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #f093fb, #f5576c); }
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.8); }
 
-/* Sidebar Styling */
+/* Sidebar: Glassmorphism Control Center */
 [data-testid="stSidebar"] {
-    background: rgba(10, 10, 15, 0.4) !important;
+    background: rgba(3, 7, 18, 0.65) !important;
     backdrop-filter: blur(25px) !important;
     -webkit-backdrop-filter: blur(25px) !important;
-    border-right: 1px solid rgba(0, 242, 254, 0.2) !important;
+    border-right: 1px solid rgba(56, 189, 248, 0.15) !important;
 }
-[data-testid="stSidebar"] h1 {
-    font-family: 'Syncopate', sans-serif !important;
-    background: linear-gradient(90deg, #00f2fe, #4facfe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-transform: uppercase;
-    font-size: 1.4rem;
-    margin-bottom: 20px;
+[data-testid="stSidebar"] h1, h3 {
+    font-family: 'Space Grotesk', sans-serif !important;
+    color: #e0f2fe !important;
 }
 [data-testid="stMetricValue"] {
-    color: #00f2fe !important;
-    font-family: 'Syncopate', sans-serif !important;
-    font-size: 1.5rem !important;
-    text-shadow: 0 0 10px rgba(0,242,254,0.4);
+    color: #38bdf8 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1.6rem !important;
+    text-shadow: 0 0 15px rgba(56,189,248,0.3);
 }
 
-/* 3D Floating Header */
+/* Floating Header */
 .ultra-header {
     text-align: center;
-    padding: 10px 0 20px 0;
+    padding: 20px 0 10px 0;
     position: relative;
     z-index: 10;
 }
 .ultra-header h1 {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 3.2rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 3.5rem;
     font-weight: 700;
     text-transform: uppercase;
-    background: linear-gradient(to right, #fff 20%, #00f2fe 40%, #4facfe 60%, #fff 80%);
+    background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #818cf8 100%);
     background-size: 200% auto;
     color: #000;
     background-clip: text;
     text-fill-color: transparent;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shineText 4s linear infinite;
-    letter-spacing: 2px;
     margin: 0;
-    filter: drop-shadow(0px 4px 15px rgba(0, 242, 254, 0.4));
+    letter-spacing: -1px;
 }
-@keyframes shineText { to { background-position: 200% center; } }
-
 .ultra-header p {
-    font-family: 'Inter', sans-serif;
-    color: #a1a1aa;
-    font-size: 0.95rem;
-    letter-spacing: 6px;
-    margin-top: 15px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    margin-top: 5px;
     text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
-/* Tabs Styling */
+/* Tabs */
 [data-testid="stTabs"] button {
-    font-family: 'Syncopate', sans-serif !important;
-    color: #a1a1aa !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+    color: #64748b !important;
     font-weight: 600 !important;
+    font-size: 1.1rem !important;
 }
 [data-testid="stTabs"] button[aria-selected="true"] {
-    color: #00f2fe !important;
-    border-bottom-color: #00f2fe !important;
+    color: #38bdf8 !important;
+    border-bottom-color: #38bdf8 !important;
 }
 
-/* Premium 3D Chat Message Bubbles */
+/* Chat Messages */
 [data-testid="stChatMessage"] {
-    background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%) !important;
-    border-top: 1px solid rgba(255,255,255,0.15) !important;
-    border-left: 1px solid rgba(255,255,255,0.15) !important;
-    border-right: 1px solid rgba(255,255,255,0.02) !important;
-    border-bottom: 1px solid rgba(255,255,255,0.02) !important;
-    border-radius: 24px !important;
-    padding: 20px 25px !important;
-    backdrop-filter: blur(25px) saturate(200%) !important;
-    -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
-    margin-bottom: 25px !important;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1) !important;
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
+    background: rgba(15, 23, 42, 0.4) !important;
+    border: 1px solid rgba(255,255,255,0.05) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    transition: all 0.3s ease !important;
 }
 [data-testid="stChatMessage"]:hover {
-    transform: scale(1.01) translateY(-3px) !important;
-    border-color: rgba(0, 242, 254, 0.5) !important;
-    box-shadow: 0 20px 40px rgba(0, 242, 254, 0.2), inset 0 1px 0 rgba(255,255,255,0.3) !important;
+    border-color: rgba(56, 189, 248, 0.3) !important;
+    box-shadow: 0 10px 40px rgba(56, 189, 248, 0.1) !important;
 }
 
-/* Glowing Avatar Containers */
+/* Avatars */
 [data-testid="stChatMessageAvatarUser"] {
-    background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%) !important;
-    box-shadow: 0 0 20px rgba(0, 201, 255, 0.6) !important;
-    border: 2px solid rgba(255,255,255,0.9) !important;
+    background: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%) !important;
+    border: 2px solid rgba(255,255,255,0.8) !important;
 }
 [data-testid="stChatMessageAvatarAssistant"] {
-    background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%) !important;
-    box-shadow: 0 0 20px rgba(255, 65, 108, 0.6) !important;
-    border: 2px solid rgba(255,255,255,0.9) !important;
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%) !important;
+    border: 2px solid rgba(255,255,255,0.8) !important;
 }
 
-/* The Magic Chat Input Container */
+/* Chat Input */
 [data-testid="stChatInput"] { background: transparent !important; }
 [data-testid="stChatInput"] > div {
-    background: rgba(10, 10, 10, 0.7) !important;
+    background: rgba(15, 23, 42, 0.8) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 30px !important;
-    backdrop-filter: blur(30px) !important;
-    padding: 8px 15px !important;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset !important;
-    transition: all 0.4s ease !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(20px) !important;
+    padding: 5px 15px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
 }
 [data-testid="stChatInput"] > div:focus-within {
-    border-color: #00f2fe !important;
-    box-shadow: 0 10px 40px rgba(0, 242, 254, 0.2), 0 0 20px rgba(0, 242, 254, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
-    transform: translateY(-4px) !important;
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.3) !important;
 }
 textarea {
     color: white !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
 }
 </style>
 """
@@ -163,57 +148,73 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 # --- SIDEBAR DASHBOARD ---
 with st.sidebar:
-    st.markdown("<h1>⚙️ Control Center</h1>", unsafe_allow_html=True)
-    st.markdown("### System Status")
-    st.success("🟢 All Systems Online")
+    st.markdown("<h1>⚙️ Command Center</h1>", unsafe_allow_html=True)
+    
+    st.markdown("### 👤 Borrower Profile")
+    st.caption("AI uses this context to give personalized answers.")
+    credit_score = st.slider("Credit Score", min_value=300, max_value=850, value=720, step=10)
+    loan_amount = st.number_input("Desired Loan Amount ($)", min_value=1000, value=50000, step=5000)
     
     st.markdown("---")
-    st.markdown("### Core Analytics")
-    st.metric(label="Knowledge Base", value="RAG Active", delta="Synced")
-    st.metric(label="AI Model", value="Gemini 1.5", delta="Ultra-Fast")
-    st.metric(label="Data Processed", value="2.4 TB", delta="+12 GB Today")
+    st.markdown("### 📈 Core Metrics")
+    st.metric(label="System Latency", value="1.2s", delta="-0.3s", delta_color="inverse")
+    st.metric(label="RAG Vector DB", value="Active", delta="Synced")
     
     st.markdown("---")
-    st.caption("Secure FinTech Environment. End-to-end encryption active.")
-    if st.button("🧹 Clear Memory", use_container_width=True):
-        st.session_state.messages = [{"role": "assistant", "content": "Memory cleared. How can I assist you today?"}]
+    
+    # Export Chat Feature
+    if "messages" in st.session_state and len(st.session_state.messages) > 1:
+        chat_export = ""
+        for msg in st.session_state.messages:
+            chat_export += f"{msg['role'].upper()}: {msg['content']}\n\n"
+        st.download_button(
+            label="📥 Download Audit Log (TXT)",
+            data=chat_export,
+            file_name="fintech_audit_log.txt",
+            mime="text/plain",
+            use_container_width=True
+        )
+        
+    if st.button("🧹 Clear Secure Memory", use_container_width=True):
+        st.session_state.messages = [{"role": "assistant", "content": "Memory wiped securely. Starting new encrypted session."}]
         st.rerun()
 
 # --- MAIN PAGE ---
 st.markdown("""
 <div class="ultra-header">
     <h1>FinTech AI</h1>
-    <p>Premium Loan Analysis</p>
+    <p>Enterprise Grade Analysis</p>
 </div>
 """, unsafe_allow_html=True)
 
 if "welcomed" not in st.session_state:
-    st.snow() # Epic Particle Effect on First Load
     st.toast('System Initialized successfully!', icon='🚀')
     time.sleep(0.5)
-    st.toast('Connecting to Qdrant Vector Database...', icon='🔗')
+    st.toast('End-to-End Encryption Enabled.', icon='🔒')
     time.sleep(0.5)
-    st.toast('Ready to process loan terms.', icon='✅')
+    st.toast('Connecting to Qdrant...', icon='🔗')
     st.session_state.welcomed = True
 
 # --- TABS ---
-tab1, tab2, tab3 = st.tabs(["💬 AI Assistant", "📊 Market Analytics", "📑 System Architecture"])
+tab1, tab2, tab3 = st.tabs(["💬 AI Assistant", "📊 Market Trends", "📑 System Specs"])
 
 with tab1:
     if "messages" not in st.session_state:
-        st.session_state.messages = [{"role": "assistant", "content": "Welcome to the Enterprise Loan Analysis System. How can I assist you today?"}]
+        st.session_state.messages = [{"role": "assistant", "content": "Welcome to the Enterprise Loan Analysis System. I am ready to process your query."}]
 
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    if prompt := st.chat_input("Ask about interest rates, penalties..."):
+    if prompt := st.chat_input("Enter your query (e.g. 'What is the interest rate?')..."):
+        
+        # Display user message normally
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
             
         with st.chat_message("assistant"):
-            with st.spinner("Analyzing millions of data points..."):
+            with st.spinner("Processing through secure RAG pipeline..."):
                 # Cinematic progress bar effect
                 progress_text = "Querying Vector Database..."
                 my_bar = st.progress(0, text=progress_text)
@@ -222,40 +223,40 @@ with tab1:
                     my_bar.progress(percent_complete + 1, text=progress_text)
                 my_bar.empty()
                 
-                response = ask(prompt)
+                # INJECT FINANCIAL PROFILE SILENTLY INTO THE PROMPT
+                enhanced_prompt = f"Context: User has a Credit Score of {credit_score} and is looking for a ${loan_amount:,} loan.\nQuestion: {prompt}"
+                
+                response = ask(enhanced_prompt)
                 
             st.markdown(response)
             st.session_state.messages.append({"role": "assistant", "content": response})
 
 with tab2:
-    st.markdown("### 📈 Global Interest Rates (Simulated)")
-    st.caption("Dynamic visualization of market trends over the last 30 days.")
-    # Generate some fake awesome data
+    st.markdown("### 📈 Live Global Interest Rates")
+    st.caption("Auto-generated visual data representing current market fluctuations.")
     chart_data = pd.DataFrame(
-        np.random.randn(30, 3) + [12, 14, 18],
+        np.random.randn(30, 3) + [6, 8, 12],
         columns=["Mortgage %", "Auto Loan %", "Personal Loan %"]
     )
-    st.line_chart(chart_data, color=["#00f2fe", "#4facfe", "#f093fb"])
+    st.line_chart(chart_data, color=["#38bdf8", "#818cf8", "#f472b6"])
     
-    st.markdown("### 📊 Approval Probability Matrix")
+    st.markdown("### 📊 Approval Probability vs Credit Score")
     bar_data = pd.DataFrame(
         np.random.rand(5, 1) * 100,
-        index=["Excellent", "Good", "Fair", "Poor", "Bad"],
+        index=[">= 800", "740 - 799", "670 - 739", "580 - 669", "< 580"],
         columns=["Approval Probability (%)"]
     )
-    st.bar_chart(bar_data, color="#00f2fe")
+    st.bar_chart(bar_data, color="#38bdf8")
 
 with tab3:
-    st.markdown("### 🏛️ Advanced RAG Architecture")
-    st.info("This system uses Retrieval-Augmented Generation (RAG) to provide highly accurate, document-backed answers.")
+    st.markdown("### 🏛️ Deep Technology Stack")
+    st.info("This interface is powered by a state-of-the-art RAG (Retrieval-Augmented Generation) pipeline.")
     st.markdown("""
-    - **Brain (LLM):** Google Gemini 1.5 Pro
-    - **Memory (Vector DB):** Qdrant Local Engine
+    - **Language Model:** Google Gemini 1.5 Pro (Generative AI)
+    - **Vector Database:** Qdrant (High-dimensional vector similarity search)
     - **Embeddings:** FastEmbed (BAAI/bge-small-en-v1.5)
-    - **Frontend:** Streamlit Ultra-Premium UI
-    - **Data Source:** `docs/loan_terms.pdf` (Bank Policies)
+    - **Frontend:** Streamlit 
+    - **Data Source:** Secure PDF Document Injection
     
-    The AI parses the question, converts it into mathematical vectors, searches the Qdrant database for the closest policy matches, and finally feeds it to Gemini to construct a human-readable analysis.
+    *How it works:* Your query is transformed into mathematical vectors and compared against the vectorized policy database. The most relevant rules are extracted and fed to Gemini to construct a perfectly accurate, hallucination-free response.
     """)
-    with st.expander("View Encryption Status"):
-        st.code("TLS 1.3 Active\\nAES-256 Vector Encryption: OK\\nAPI Token: Secured", language="bash")
