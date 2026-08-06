@@ -20,6 +20,12 @@ custom_css = """
 .viewerBadge_container, .viewerBadge_link, #viewerBadge, [data-testid="manage-app-button"] { display: none !important; }
 #MainMenu, footer { display: none !important; }
 
+/* Hide Share / Star / Edit / GitHub buttons from the top-right toolbar */
+[data-testid="stToolbar"] { right: 0; }
+[data-testid="stDecoration"] { display: none !important; }
+[data-testid="stToolbarActionBtn"] { display: none !important; }
+header [data-testid="stToolbar"] > div:last-child { visibility: hidden !important; }
+
 /* Force sidebar toggle SVG to be white and visible in case of dark mode conflicts */
 [data-testid="collapsedControl"], [data-testid="stSidebarCollapsedControl"] { visibility: visible !important; display: block !important; }
 [data-testid="collapsedControl"] svg, [data-testid="stSidebarCollapsedControl"] svg { fill: white !important; stroke: white !important; color: white !important; }
