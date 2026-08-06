@@ -122,12 +122,12 @@ button[kind="primary"] {
     animation: gradientMove 3s ease infinite !important;
     border-radius: 50px !important;
     transition: all 0.3s ease !important;
-    padding: 12px 10px !important;
+    padding: 10px 15px !important;
 }
 button[kind="primary"] p {
     font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 1.15rem !important;
+    font-size: 1.05rem !important;
     white-space: nowrap !important;
     margin: 0 !important;
 }
@@ -137,7 +137,7 @@ button[kind="secondary"] {
     border-radius: 50px !important;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
     transition: all 0.3s ease !important;
-    padding: 12px 10px !important;
+    padding: 10px 15px !important;
 }
 button[kind="secondary"]:hover {
     background: rgba(255, 255, 255, 0.15) !important;
@@ -148,7 +148,7 @@ button[kind="secondary"] p {
     color: #94a3b8 !important;
     font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 1.15rem !important;
+    font-size: 1.05rem !important;
     white-space: nowrap !important;
     margin: 0 !important;
 }
@@ -246,7 +246,7 @@ if "active_tab" not in st.session_state:
     st.session_state.active_tab = "AI Assistant"
 
 st.markdown("<br>", unsafe_allow_html=True)
-col_sp1, col_tab1, col_tab2, col_tab3, col_sp2 = st.columns([1, 2, 2, 2, 1])
+col_tab1, col_tab2, col_tab3 = st.columns(3)
 
 with col_tab1:
     if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
