@@ -440,9 +440,15 @@ elif st.session_state.active_tab == "Command Center":
             st.download_button(label=t('download_log', lang), data=chat_export, file_name="fintech_audit_log.txt", mime="text/plain", use_container_width=True)
 
 elif st.session_state.active_tab == "Market Trends":
-    st.markdown(f"""<div style="display:flex; justify-content:space-between; align-items:center;">
+    st.markdown(f"""<div style="display:flex; justify-content:center; align-items:center;">
         <h3 style="color:white;margin:0;">🌍 {t('tab_markets', lang)}</h3>
     </div><br>""", unsafe_allow_html=True)
+    
+    st.markdown("""<style>
+        div[data-testid="stRadio"] > div { justify-content: center; gap: 2rem; }
+        div[data-testid="stRadio"] label p { font-size: 1.2rem !important; font-weight: 600 !important; color: #e2e8f0 !important; padding: 4px 12px; }
+        div[data-testid="stRadio"] label[data-checked="true"] p { color: white !important; background: rgba(255,255,255,0.1); border-radius: 8px;}
+    </style>""", unsafe_allow_html=True)
     
     country_choice = st.radio("Region", ["Uzbekistan 🇺🇿", "USA 🇺🇸", "Russia 🇷🇺"], horizontal=True, label_visibility="collapsed")
     
@@ -457,23 +463,23 @@ elif st.session_state.active_tab == "Market Trends":
     m1, m2, m3, m4 = st.columns(4)
     with m1:
         st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(14,165,233,0.05));border:1px solid rgba(14,165,233,0.4);border-radius:16px;padding:16px;text-align:center">
-            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('mortgage_rate', lang)}</div>
-            <div style="font-size:2rem;font-weight:800;color:#0ea5e9;margin:4px 0">{round(random.uniform(base_mortgage-0.3, base_mortgage+0.5), 2)}%</div>
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('mortgage_rate', lang)} <span style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-size:0.6rem;text-transform:none;">{t('approximate', lang)}</span></div>
+            <div style="font-size:2rem;font-weight:800;color:#0ea5e9;margin:4px 0">~{round(random.uniform(base_mortgage-0.3, base_mortgage+0.5), 2)}%</div>
             <div style="font-size:0.8rem;color:#22c55e">▲ +{round(random.uniform(0.01, 0.25), 2)}%</div></div>""", unsafe_allow_html=True)
     with m2:
         st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(139,92,246,0.05));border:1px solid rgba(139,92,246,0.4);border-radius:16px;padding:16px;text-align:center">
-            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('auto_loan', lang)}</div>
-            <div style="font-size:2rem;font-weight:800;color:#8b5cf6;margin:4px 0">{round(random.uniform(base_auto-0.4, base_auto+0.6), 2)}%</div>
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('auto_loan', lang)} <span style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-size:0.6rem;text-transform:none;">{t('approximate', lang)}</span></div>
+            <div style="font-size:2rem;font-weight:800;color:#8b5cf6;margin:4px 0">~{round(random.uniform(base_auto-0.4, base_auto+0.6), 2)}%</div>
             <div style="font-size:0.8rem;color:#ef4444">▼ -{round(random.uniform(0.01, 0.15), 2)}%</div></div>""", unsafe_allow_html=True)
     with m3:
         st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(236,72,153,0.15),rgba(236,72,153,0.05));border:1px solid rgba(236,72,153,0.4);border-radius:16px;padding:16px;text-align:center">
-            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('personal_loan', lang)}</div>
-            <div style="font-size:2rem;font-weight:800;color:#ec4899;margin:4px 0">{round(random.uniform(base_personal-0.5, base_personal+0.8), 2)}%</div>
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('personal_loan', lang)} <span style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-size:0.6rem;text-transform:none;">{t('approximate', lang)}</span></div>
+            <div style="font-size:2rem;font-weight:800;color:#ec4899;margin:4px 0">~{round(random.uniform(base_personal-0.5, base_personal+0.8), 2)}%</div>
             <div style="font-size:0.8rem;color:#22c55e">▲ +{round(random.uniform(0.10, 0.40), 2)}%</div></div>""", unsafe_allow_html=True)
     with m4:
         st.markdown(f"""<div style="background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(34,197,94,0.05));border:1px solid rgba(34,197,94,0.4);border-radius:16px;padding:16px;text-align:center">
-            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('prime_rate', lang)}</div>
-            <div style="font-size:2rem;font-weight:800;color:#22c55e;margin:4px 0">{base_prime}%</div>
+            <div style="font-size:0.75rem;color:#94a3b8;letter-spacing:2px;text-transform:uppercase">{t('prime_rate', lang)} <span style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-size:0.6rem;text-transform:none;">{t('approximate', lang)}</span></div>
+            <div style="font-size:2rem;font-weight:800;color:#22c55e;margin:4px 0">~{base_prime}%</div>
             <div style="font-size:0.8rem;color:#94a3b8">{t('stable', lang)}</div></div>""", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)

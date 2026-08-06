@@ -239,6 +239,13 @@ TRANSLATIONS = {
         "RU": "Уровень уверенности"
     },
     
+    # UI Badges
+    "approximate": {
+        "EN": "~ Estimated",
+        "UZ": "~ Taxminiy",
+        "RU": "~ Примерно"
+    },
+    
     # Language names
 
     "lang_en": {"EN": "English", "UZ": "English", "RU": "English"},
