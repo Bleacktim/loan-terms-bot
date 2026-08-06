@@ -47,6 +47,22 @@ header [data-testid="stToolbar"] > div:last-child { visibility: hidden !importan
     color: white !important; 
 }
 
+/* UNIFORM BACKGROUND — same color everywhere */
+html, body, [data-testid="stApp"], .stApp,
+[data-testid="stHeader"], header,
+[data-testid="stToolbar"],
+[data-testid="stSidebar"],
+[data-testid="stMainBlockContainer"],
+[data-testid="block-container"],
+.main, .block-container,
+[class*="appview-container"],
+[class*="main-content"],
+section[data-testid="stSidebar"] {
+    background-color: #0f172a !important;
+    background: #0f172a !important;
+}
+
+
 /* Animated Blobs Background */
 .stApp {
     background-color: #0f172a !important;
