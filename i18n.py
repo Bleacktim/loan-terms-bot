@@ -211,6 +211,11 @@ TRANSLATIONS = {
         "UZ": "Shartlarda ko'rsatilmagan.",
         "RU": "Не указано в условиях."
     },
+    "greeting_reply": {
+        "EN": "Hello! How can I help you with the loan terms today?",
+        "UZ": "Salom! Bugun sizga kredit shartlari bo'yicha qanday yordam bera olaman?",
+        "RU": "Здравствуйте! Как я могу помочь вам с условиями кредита сегодня?"
+    },
     
     # Language names
 

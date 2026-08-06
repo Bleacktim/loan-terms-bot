@@ -1,13 +1,16 @@
-from guard import is_in_scope
+from guard import classify_input
 from retrieve import search
 from answer import write_answer
 from verify import is_grounded
 from i18n import t
 
 def ask(question: str, lang: str = "EN") -> str:
-    # STEP 1 - INPUT GUARD (security): is the question in scope?
-    if not is_in_scope(question):
+    # STEP 1 - INPUT GUARD (security): categorize the question
+    category = classify_input(question)
+    if category == "REFUSE":
         return t("refusal", lang)
+    if category == "GREETING":
+        return t("greeting_reply", lang)
 
     # STEP 2 - retrieve the real clauses from the PDF
     chunks = search(question)
