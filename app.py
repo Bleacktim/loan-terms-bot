@@ -16,7 +16,7 @@ custom_css = """
 */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Fira+Code:wght@400&display=swap');
 
-#MainMenu, footer {visibility: hidden !important;}
+#MainMenu, footer, [data-testid="stToolbar"], .viewerBadge_container, .viewerBadge_link, #viewerBadge, [data-testid="manage-app-button"] {visibility: hidden !important; display: none !important;}
 header {background: transparent !important;}
 
 /* Animated Blobs Background */
