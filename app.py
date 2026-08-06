@@ -272,10 +272,6 @@ with main_left:
             use_container_width=True
         )
 
-    if st.button("🧹 Clear Secure Memory", use_container_width=True):
-        if "messages" in st.session_state:
-            st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {persona}."}]
-        st.rerun()
 
 with main_right:
     # --- MAIN PAGE HEADER ---
@@ -296,7 +292,7 @@ with main_right:
     if "active_tab" not in st.session_state:
         st.session_state.active_tab = "AI Assistant"
 
-    col_tab1, col_tab2, col_tab3 = st.columns(3)
+    col_tab1, col_tab2, col_tab3, col_clear = st.columns(4)
 
     with col_tab1:
         if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
@@ -311,6 +307,12 @@ with main_right:
     with col_tab3:
         if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
             st.session_state.active_tab = "System Specs"
+            st.rerun()
+
+    with col_clear:
+        if st.button("🧹 Clear Memory", type="secondary", use_container_width=True):
+            if "messages" in st.session_state:
+                st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {persona}."}]
             st.rerun()
 
     st.markdown("<br>", unsafe_allow_html=True)
