@@ -122,12 +122,14 @@ button[kind="primary"] {
     animation: gradientMove 3s ease infinite !important;
     border-radius: 50px !important;
     transition: all 0.3s ease !important;
-    padding: 10px 0 !important;
+    padding: 12px 10px !important;
 }
 button[kind="primary"] p {
     font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 1.3rem !important;
+    font-size: 1.15rem !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
 }
 button[kind="secondary"] {
     background: rgba(255, 255, 255, 0.05) !important;
@@ -135,7 +137,7 @@ button[kind="secondary"] {
     border-radius: 50px !important;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
     transition: all 0.3s ease !important;
-    padding: 10px 0 !important;
+    padding: 12px 10px !important;
 }
 button[kind="secondary"]:hover {
     background: rgba(255, 255, 255, 0.15) !important;
@@ -146,7 +148,9 @@ button[kind="secondary"] p {
     color: #94a3b8 !important;
     font-family: 'Outfit', sans-serif !important;
     font-weight: 700 !important;
-    font-size: 1.3rem !important;
+    font-size: 1.15rem !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
 }
 
 /* Chat Messages */
