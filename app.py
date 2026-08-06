@@ -5,18 +5,25 @@ st.set_page_config(page_title="FinTech AI Engine", page_icon="🏦", layout="cen
 
 custom_css = """
 <style>
-/* Ultimate Premium FinTech Holographic Theme */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap');
+/* Ultra-Premium FinTech Holographic Theme */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
 
+/* Hide default Streamlit UI for app-like feel */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* Dynamic Ambient Background */
 .stApp {
-    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #000000, #312e81) !important;
-    background-size: 400% 400% !important;
-    animation: gradientBG 15s ease infinite !important;
-    font-family: 'Space Grotesk', sans-serif !important;
-    color: white !important;
+    background: radial-gradient(circle at 15% 50%, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.8)), 
+                radial-gradient(circle at 85% 30%, rgba(49, 46, 129, 0.9), rgba(0, 0, 0, 1)) !important;
+    background-size: 200% 200% !important;
+    animation: gradientShift 15s ease infinite !important;
+    font-family: 'Outfit', sans-serif !important;
+    color: #e2e8f0 !important;
 }
 
-@keyframes gradientBG {
+@keyframes gradientShift {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
@@ -25,45 +32,80 @@ custom_css = """
 /* Floating Header Glow */
 .premium-header {
     text-align: center;
-    padding: 20px 0;
-    animation: float 6s ease-in-out infinite;
+    padding: 30px 0;
+    animation: float 6s ease-in-out infinite, pulseGlow 3s alternate infinite;
 }
 @keyframes float {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-8px); }
     100% { transform: translateY(0px); }
+}
+@keyframes pulseGlow {
+    from { text-shadow: 0 0 10px rgba(0,242,254,0.1); }
+    to { text-shadow: 0 0 30px rgba(0,242,254,0.4); }
 }
 
 .premium-header h1 {
-    font-size: 3rem;
+    font-size: 3.8rem;
     font-weight: 700;
-    letter-spacing: -1px;
-    background: linear-gradient(to right, #00f2fe, #4facfe, #00f2fe);
+    background: linear-gradient(90deg, #00f2fe, #4facfe, #00f2fe);
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: shine 3s linear infinite;
-    margin-bottom: 5px;
+    margin: 0;
 }
 @keyframes shine {
     to { background-position: 200% center; }
 }
 .premium-header p {
-    color: #cbd5e1;
-    font-size: 1.2rem;
-    font-weight: 300;
-    letter-spacing: 2px;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    font-weight: 400;
+    letter-spacing: 4px;
     text-transform: uppercase;
+    margin-top: 10px;
 }
 
-/* Chat Messages */
+/* Glassmorphism Chat Messages Box */
 .stChatMessage {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 15px !important;
-    padding: 15px !important;
-    backdrop-filter: blur(10px) !important;
-    margin-bottom: 10px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 20px !important;
+    padding: 20px !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    margin-bottom: 15px !important;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease !important;
+}
+.stChatMessage:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.15) !important;
+    border: 1px solid rgba(0, 242, 254, 0.3) !important;
+}
+
+/* Neon Chat Input Styling */
+.stChatInputContainer {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid rgba(0, 242, 254, 0.3) !important;
+    border-radius: 30px !important;
+    backdrop-filter: blur(20px) !important;
+    box-shadow: 0 0 20px rgba(0, 242, 254, 0.1) !important;
+    transition: all 0.3s ease !important;
+    padding: 5px !important;
+}
+.stChatInputContainer:focus-within {
+    border: 1px solid rgba(0, 242, 254, 0.9) !important;
+    box-shadow: 0 0 40px rgba(0, 242, 254, 0.4) !important;
+}
+
+/* Gradient Avatars */
+[data-testid="stChatMessageAvatarUser"] {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%) !important;
+}
+[data-testid="stChatMessageAvatarAssistant"] {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
 }
 </style>
 """
