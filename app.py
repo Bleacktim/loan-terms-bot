@@ -214,7 +214,7 @@ with tab1:
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": f"Welcome. I am operating as a **{persona}**. How can I assist you with your loan terms?"}]
 
-    chat_container = st.container()
+    chat_container = st.container(height=550, border=False)
 
     if prompt := st.chat_input("Ask about interest rates, penalties..."):
         
