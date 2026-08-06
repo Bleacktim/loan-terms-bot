@@ -2,23 +2,22 @@ from guard import is_in_scope
 from retrieve import search
 from answer import write_answer
 from verify import is_grounded
+from i18n import t
 
-REFUSAL = "I can only answer questions about this loan product's terms and conditions."
-
-def ask(question: str) -> str:
+def ask(question: str, lang: str = "EN") -> str:
     # STEP 1 - INPUT GUARD (security): is the question in scope?
     if not is_in_scope(question):
-        return REFUSAL
+        return t("refusal", lang)
 
     # STEP 2 - retrieve the real clauses from the PDF
     chunks = search(question)
 
     # STEP 3 - answer using ONLY those clauses
-    draft = write_answer(question, chunks)
+    draft = write_answer(question, chunks, lang)
 
     # STEP 4 - OUTPUT GUARD (security): is the answer backed by the PDF?
     if not is_grounded(draft, chunks):
-        return "I can't confirm this from the document."
+        return t("ungrounded", lang)
 
     return draft
 
@@ -30,4 +29,4 @@ if __name__ == "__main__":
     ]
     for q in tests:
         print(">", q)
-        print(ask(q), "\n")
+        print(ask(q, "EN"), "\n")
