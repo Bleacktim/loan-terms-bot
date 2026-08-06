@@ -272,7 +272,7 @@ if "welcomed" not in st.session_state:
 if "active_tab" not in st.session_state:
     st.session_state.active_tab = "AI Assistant"
 
-col_tab1, col_tab2, col_tab3, col_tab4 = st.columns(4)
+col_tab1, col_tab2, col_tab3, col_tab4 = st.columns([1.2, 1.2, 1.2, 1.1])
 
 with col_tab1:
     if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
@@ -280,17 +280,17 @@ with col_tab1:
         st.rerun()
 
 with col_tab2:
-    if st.button("⚙️ Command Center", type="primary" if st.session_state.active_tab == "Command Center" else "secondary", use_container_width=True):
+    if st.button("⚙️ Settings", type="primary" if st.session_state.active_tab == "Command Center" else "secondary", use_container_width=True):
         st.session_state.active_tab = "Command Center"
         st.rerun()
 
 with col_tab3:
-    if st.button("📊 Market Trends", type="primary" if st.session_state.active_tab == "Market Trends" else "secondary", use_container_width=True):
+    if st.button("📊 Markets", type="primary" if st.session_state.active_tab == "Market Trends" else "secondary", use_container_width=True):
         st.session_state.active_tab = "Market Trends"
         st.rerun()
 
 with col_tab4:
-    if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
+    if st.button("📑 System", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
         st.session_state.active_tab = "System Specs"
         st.rerun()
 
