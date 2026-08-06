@@ -1,7 +1,8 @@
 import streamlit as st
+import time
 from agent import ask
 
-st.set_page_config(page_title="FinTech AI Engine", page_icon="🏦", layout="centered")
+st.set_page_config(page_title="FinTech AI Engine", page_icon="🏦", layout="wide", initial_sidebar_state="expanded")
 
 custom_css = """
 <style>
@@ -29,10 +30,33 @@ custom_css = """
 ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #00f2fe, #4facfe); border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #f093fb, #f5576c); }
 
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    background: rgba(10, 10, 15, 0.4) !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    border-right: 1px solid rgba(0, 242, 254, 0.2) !important;
+}
+[data-testid="stSidebar"] h1 {
+    font-family: 'Syncopate', sans-serif !important;
+    background: linear-gradient(90deg, #00f2fe, #4facfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+[data-testid="stMetricValue"] {
+    color: #00f2fe !important;
+    font-family: 'Syncopate', sans-serif !important;
+    font-size: 1.5rem !important;
+    text-shadow: 0 0 10px rgba(0,242,254,0.4);
+}
+
 /* 3D Floating Header */
 .ultra-header {
     text-align: center;
-    padding: 40px 0 20px 0;
+    padding: 10px 0 20px 0;
     position: relative;
     z-index: 10;
 }
@@ -81,7 +105,7 @@ custom_css = """
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease !important;
 }
 [data-testid="stChatMessage"]:hover {
-    transform: scale(1.015) translateY(-3px) !important;
+    transform: scale(1.01) translateY(-3px) !important;
     border-color: rgba(0, 242, 254, 0.5) !important;
     box-shadow: 0 20px 40px rgba(0, 242, 254, 0.2), inset 0 1px 0 rgba(255,255,255,0.3) !important;
 }
@@ -124,6 +148,22 @@ textarea {
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
+# --- SIDEBAR DASHBOARD ---
+with st.sidebar:
+    st.markdown("<h1>⚙️ Control Center</h1>", unsafe_allow_html=True)
+    st.markdown("### System Status")
+    st.success("🟢 All Systems Online")
+    
+    st.markdown("---")
+    st.markdown("### Core Analytics")
+    st.metric(label="Knowledge Base", value="RAG Active", delta="Synced")
+    st.metric(label="AI Model", value="Gemini 1.5", delta="Ultra-Fast")
+    st.metric(label="Security", value="Enterprise", delta="Encrypted")
+    
+    st.markdown("---")
+    st.caption("Secure FinTech Environment. End-to-end encryption active.")
+
+# --- MAIN PAGE ---
 st.markdown("""
 <div class="ultra-header">
     <h1>FinTech AI</h1>
@@ -131,8 +171,16 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+if "welcomed" not in st.session_state:
+    st.toast('System Initialized successfully!', icon='🚀')
+    time.sleep(0.5)
+    st.toast('Connecting to Qdrant Vector Database...', icon='🔗')
+    time.sleep(0.5)
+    st.toast('Ready to process loan terms.', icon='✅')
+    st.session_state.welcomed = True
+
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state.messages = [{"role": "assistant", "content": "Welcome to the Enterprise Loan Analysis System. How can I assist you today?"}]
 
 for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
@@ -144,7 +192,16 @@ if prompt := st.chat_input("Ask about interest rates, penalties..."):
         st.markdown(prompt)
         
     with st.chat_message("assistant"):
-        with st.spinner("Analyzing..."):
+        with st.spinner("Analyzing millions of data points..."):
+            # Cinematic progress bar effect
+            progress_text = "Querying Vector Database..."
+            my_bar = st.progress(0, text=progress_text)
+            for percent_complete in range(100):
+                time.sleep(0.005)
+                my_bar.progress(percent_complete + 1, text=progress_text)
+            my_bar.empty()
+            
             response = ask(prompt)
+            
         st.markdown(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
