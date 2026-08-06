@@ -238,48 +238,55 @@ st.markdown(custom_css, unsafe_allow_html=True)
 # Clear button styled to match the send button
 st.markdown("""
 <style>
-/* Position the column row inside the bottom bar */
 [data-testid="stBottom"] {
     position: relative !important;
 }
+/* Overlay the clear button column on top of the chat input area */
 [data-testid="stBottom"] [data-testid="stHorizontalBlock"] {
     position: absolute !important;
-    right: 56px !important;
-    bottom: 10px !important;
-    z-index: 999 !important;
-    width: auto !important;
+    right: 52px !important;
+    bottom: 9px !important;
+    z-index: 9999 !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
     margin: 0 !important;
+    padding: 0 !important;
     gap: 0 !important;
+    pointer-events: all !important;
 }
 [data-testid="stBottom"] [data-testid="stHorizontalBlock"] > div {
     padding: 0 !important;
-    width: 42px !important;
-    min-width: 42px !important;
-    max-width: 42px !important;
+    margin: 0 !important;
+    width: 40px !important;
+    min-width: 40px !important;
+    max-width: 40px !important;
+    flex: none !important;
 }
-/* Match exactly the send button style */
+/* Make clear button identical to send button */
 [data-testid="stBottom"] button[kind="secondary"] {
-    width: 42px !important;
-    height: 42px !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
     padding: 0 !important;
     border-radius: 50% !important;
     border: none !important;
-    background: rgb(30, 30, 46) !important;
-    min-height: unset !important;
+    background: rgba(255,255,255,0.1) !important;
     box-shadow: none !important;
+    cursor: pointer !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 }
 [data-testid="stBottom"] button[kind="secondary"]:hover {
-    background: rgba(239,68,68,0.3) !important;
-    border: 1px solid rgba(239,68,68,0.6) !important;
+    background: rgba(239,68,68,0.35) !important;
 }
 [data-testid="stBottom"] button[kind="secondary"] p {
     color: white !important;
     font-size: 1rem !important;
-    line-height: 1 !important;
     margin: 0 !important;
+    line-height: 1 !important;
     white-space: nowrap !important;
 }
 </style>
