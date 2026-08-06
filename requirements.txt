@@ -2,5 +2,5 @@ google-genai
 qdrant-client
 pypdf
 python-dotenv
-gradio
+streamlit
 fpdf
