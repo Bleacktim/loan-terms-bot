@@ -108,50 +108,41 @@ header {background: transparent !important;}
     text-transform: uppercase;
 }
 
-/* Tabs Container */
-div[data-testid="stTabs"] > div:first-child > div:first-child {
-    display: flex !important;
-    justify-content: center !important;
-    gap: 20px !important;
-    border-bottom: none !important;
-}
-
-/* Hide Animated Underline */
-div[data-testid="stTabs"] > div:first-child > div:first-child > div[style*="position: absolute"] {
-    display: none !important;
-}
-div[data-baseweb="tab-highlight"] {
-    display: none !important;
-    background-color: transparent !important;
-}
-
-/* Tab Buttons */
-div[data-testid="stTabs"] button {
-    font-family: 'Outfit', sans-serif !important;
-    color: #94a3b8 !important;
-    font-weight: 700 !important;
-    font-size: 1.4rem !important;
-    padding: 15px 35px !important;
-    border-radius: 50px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
-    transition: all 0.3s ease !important;
-}
-
-div[data-testid="stTabs"] button:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    transform: translateY(-3px) !important;
-}
-
-div[data-testid="stTabs"] button[aria-selected="true"] {
+/* Custom Buttons as Tabs */
+button[kind="primary"] {
     color: #ffffff !important;
     background: linear-gradient(135deg, #0ea5e9, #8b5cf6, #ec4899) !important;
     background-size: 200% auto !important;
     border: none !important;
     box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6) !important;
     animation: gradientMove 3s ease infinite !important;
+    border-radius: 50px !important;
+    transition: all 0.3s ease !important;
+    padding: 10px 0 !important;
+}
+button[kind="primary"] p {
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1.3rem !important;
+}
+button[kind="secondary"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50px !important;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+    padding: 10px 0 !important;
+}
+button[kind="secondary"]:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-3px) !important;
+}
+button[kind="secondary"] p {
+    color: #94a3b8 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1.3rem !important;
 }
 
 /* Chat Messages */
@@ -242,10 +233,31 @@ if "welcomed" not in st.session_state:
     st.toast('Vector Neural Engine Online.', icon='🧠')
     st.session_state.welcomed = True
 
-# --- TABS ---
-tab1, tab2, tab3 = st.tabs(["💬 AI Assistant", "📊 Market Trends", "📑 System Specs"])
+# --- CUSTOM TABS ---
+if "active_tab" not in st.session_state:
+    st.session_state.active_tab = "AI Assistant"
 
-with tab1:
+st.markdown("<br>", unsafe_allow_html=True)
+col_sp1, col_tab1, col_tab2, col_tab3, col_sp2 = st.columns([1, 2, 2, 2, 1])
+
+with col_tab1:
+    if st.button("💬 AI Assistant", type="primary" if st.session_state.active_tab == "AI Assistant" else "secondary", use_container_width=True):
+        st.session_state.active_tab = "AI Assistant"
+        st.rerun()
+
+with col_tab2:
+    if st.button("📊 Market Trends", type="primary" if st.session_state.active_tab == "Market Trends" else "secondary", use_container_width=True):
+        st.session_state.active_tab = "Market Trends"
+        st.rerun()
+
+with col_tab3:
+    if st.button("📑 System Specs", type="primary" if st.session_state.active_tab == "System Specs" else "secondary", use_container_width=True):
+        st.session_state.active_tab = "System Specs"
+        st.rerun()
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+if st.session_state.active_tab == "AI Assistant":
     if "messages" not in st.session_state:
         st.session_state.messages = [{"role": "assistant", "content": f"Welcome. I am operating as a **{persona}**. How can I assist you with your loan terms?"}]
 
@@ -269,7 +281,7 @@ with tab1:
                     
             st.session_state.messages.append({"role": "assistant", "content": response})
 
-with tab2:
+elif st.session_state.active_tab == "Market Trends":
     st.markdown("### 📈 Live Global Interest Rates")
     chart_data = pd.DataFrame(
         np.random.randn(30, 3) + [6, 8, 12],
@@ -285,7 +297,7 @@ with tab2:
     )
     st.bar_chart(bar_data, color="#8b5cf6")
 
-with tab3:
+elif st.session_state.active_tab == "System Specs":
     st.markdown("### 🏛️ Deep Technology Stack")
     st.info("This interface utilizes Apple Vision Pro-style glassmorphism combined with heavy LLM backend processing.")
     st.markdown("""
