@@ -326,16 +326,15 @@ if st.session_state.active_tab == "AI Assistant":
     # --- CUSTOM INPUT ROW: [🧹 Clear] + [text input] + [↑ Send] ---
     st.markdown("""
     <style>
-    .input-row-clear button { border: 1px solid rgba(239,68,68,0.6) !important; background: rgba(239,68,68,0.1) !important; }
+    .input-row-clear button { border: 1px solid rgba(239,68,68,0.6) !important; background: rgba(239,68,68,0.1) !important; height: 42px !important; }
     .input-row-clear button p { color: #fca5a5 !important; }
     .input-row-clear button:hover { background: rgba(239,68,68,0.25) !important; border-color: rgba(239,68,68,0.9) !important; }
-    .input-row-send button { border: 1px solid rgba(139,92,246,0.6) !important; background: rgba(139,92,246,0.2) !important; }
-    .input-row-send button p { color: #c4b5fd !important; }
-    .input-row-send button:hover { background: rgba(139,92,246,0.4) !important; border-color: rgba(139,92,246,0.9) !important; box-shadow: 0 0 20px rgba(139,92,246,0.5) !important; }
     </style>
     """, unsafe_allow_html=True)
 
-    inp_clear, inp_text, inp_send = st.columns([1, 7, 1])
+    inp_text, inp_clear = st.columns([7, 1])
+    with inp_text:
+        user_input = st.chat_input("Ask about interest rates, penalties...")
     with inp_clear:
         st.markdown('<div class="input-row-clear">', unsafe_allow_html=True)
         if st.button("🧹 Clear", use_container_width=True, key="clear_btn_inline"):
@@ -343,10 +342,6 @@ if st.session_state.active_tab == "AI Assistant":
                 st.session_state.messages = [{"role": "assistant", "content": f"Memory wiped securely. Starting new session as a {st.session_state.persona}."}]
             st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
-    with inp_text:
-        user_input = st.chat_input("Ask about interest rates, penalties...")
-    with inp_send:
-        pass
 
     if user_input:
         st.session_state.messages.append({"role": "user", "content": user_input})
